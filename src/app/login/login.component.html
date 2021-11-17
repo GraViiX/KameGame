@@ -1,0 +1,10 @@
+<p>login works!</p>
+
+<form [formGroup]="loginForm">
+  <h3>Login</h3>
+  <label>Username</label>
+  <input type="text" formControlName="username">
+  <label>Password</label>
+  <input type="text" formControlName="uPassword">
+  <button (click)="LoginClick()">Login</button>
+</form>
