@@ -21,4 +21,8 @@ export class UserService {
   userLogin(userToPost : IUser):Observable<IUser>{
     return this.http.post<IUser>(`${this.url}Login`, userToPost,httpOptions);
   }
+
+  UserCreate(UserToCreate:IUser):Observable<IUser>{
+    return this.http.post<IUser>(`${this.url}CreateUser`,UserToCreate,httpOptions)
+  }
 }
