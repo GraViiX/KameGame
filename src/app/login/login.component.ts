@@ -35,19 +35,6 @@ export class LoginComponent implements OnInit {
   })
   //#endregion
 
-  /*CreateAccountForm = new FormGroup({
-    CreateUsername : new FormControl(''),
-    CreateuPassword : new FormControl(''),
-    Email : new FormControl(''),
-    UTLF : new FormControl('' ),
-    Roleid : new FormControl('1'),
-    AddressId: new FormControl('1'),
-    Address : new FormGroup({
-      PostId : new FormControl(''),
-      StreetNames : new FormControl('')
-    })
-  })*/
-
   constructor(private api:UserService) { }
 
   ngOnInit(): void {
