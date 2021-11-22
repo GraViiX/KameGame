@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IPostcode } from '../Interface/ipostcode';
 import { IUser } from '../Interface/iuser';
 import { UserService } from '../Services/user.service';
+import { PostcodeService } from '../Services/postcode.service';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +11,13 @@ import { UserService } from '../Services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  postcodes : IPostcode[] = [];
+  postcode : IPostcode[] = [{
+    postcodeId : 0,
+    city : "",
+    postcode : 0
+  }];
 
   loginForm = new FormGroup({
     username : new FormControl('' ),
@@ -29,15 +38,31 @@ export class LoginComponent implements OnInit {
     AddressId: new FormControl(0),
     Address : new FormGroup({
       AddressId: new FormControl(0),
-      PostCodeId : new FormControl(0, Validators.required),
+      // For at få denne, skal der laves et get statement på PostCode tabellen, hvor vi returnere ID. Postcode sætter vi i en liste, som man kan søge i.
+      PostCodeId : new FormControl(null, Validators.required),
       StreetNames : new FormControl('', Validators.required)
     })
-  })
+  });
+
+  postcodeForm = new FormGroup({
+    PostCode : new FormControl(null, Validators.required)
+  });
+
   //#endregion
 
-  constructor(private api:UserService) { }
+  constructor(private api:UserService, private apiPostcode : PostcodeService) { }
 
   ngOnInit(): void {
+    this.getPostcodes();
+    this.formGroupPostcodeChange();
+  }
+
+  getPostcodes(){
+    this.apiPostcode.userLogin().subscribe((data) => {
+      this.postcodes = data;
+      // console.log(data);
+
+    })
   }
 
   LoginClick() {
@@ -49,10 +74,31 @@ export class LoginComponent implements OnInit {
   }
 
   CreateAccount(){
-    this.api.UserCreate(this.CreateAccountForm.value).subscribe(data => {
-      console.log(data);
-    })
-    //console.log(this.CreateAccountForm.value);
+    if(this.CreateAccountForm.value.PostCodeId == null) {
+      console.log("error: this.CreateAccountForm.value.PostCodeId er lig null!!!");
+    }
+    // this.api.UserCreate(this.CreateAccountForm.value).subscribe(data => {
+    //   console.log(data);
+    // })
+    console.log(this.CreateAccountForm.value);
 
+  }
+
+  formGroupPostcodeChange(){
+    this.postcodeForm.get('PostCode')?.valueChanges.subscribe((data : any)=> {
+      // Den her indeholder 2750
+      // this.CreateAccountForm.value.PostCodeId
+      // console.log(data);
+      this.postcode = this.postcodes.filter(function(element){
+        if(element.postcode == data) {
+          console.log(element);
+          return element;
+        }
+        else{
+          return null;
+        }
+      })
+      this.CreateAccountForm.value.Address.PostCodeId = this.postcode[0].postcodeId;
+    })
   }
 }
