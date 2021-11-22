@@ -18,11 +18,11 @@
               <h5 class="modal-title" id="CreateAccountLabel">Create Account</h5>
           </div>
           <div class="modal-body bg-success">
-            <form [formGroup]="CreateAccountForm">
+            <form [formGroup]="CreateAccountForm" name="formAccount">
               <h3>Create Account</h3>
               <div class="mb-3">
                 <label>Username</label>
-                <input type="text" formControlName="Username">
+                <input type="text" formControlName="Username" #banan>
               </div>
 
               <div class="mb-3">
@@ -37,7 +37,7 @@
              </div>
 
               <div class="mb-3">
-                <label>Tif</label>
+                <label>Tlf</label>
               <input type="number" formControlName="UTLF">
               </div>
 
@@ -46,7 +46,6 @@
                 <div class="mb-3">
 
                 <label>Post Code</label>
-                <input type="number" formControlName="PostCodeId">
                 </div>
 
                 <div class="mb-3">

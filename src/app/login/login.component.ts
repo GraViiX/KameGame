@@ -10,6 +10,8 @@ import { UserService } from '../Services/user.service';
 })
 export class LoginComponent implements OnInit {
 
+  banan : any;
+
   loginForm = new FormGroup({
     username : new FormControl('' ),
     uPassword : new FormControl('')
@@ -29,7 +31,7 @@ export class LoginComponent implements OnInit {
     AddressId: new FormControl(0),
     Address : new FormGroup({
       AddressId: new FormControl(0),
-      PostCodeId : new FormControl(0, Validators.required),
+      PostCodeId : new FormControl(null, Validators.required),
       StreetNames : new FormControl('', Validators.required)
     })
   })
@@ -38,6 +40,11 @@ export class LoginComponent implements OnInit {
   constructor(private api:UserService) { }
 
   ngOnInit(): void {
+    this.getPostcodes();
+  }
+
+  getPostcodes(){
+    //var UserInput : string = document.formAccount.banan.value;
   }
 
   LoginClick() {
