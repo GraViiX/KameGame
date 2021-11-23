@@ -50,9 +50,10 @@ export class LoginComponent implements OnInit {
 
   //#endregion
 
-  constructor(private api:UserService, private apiPostcode : PostcodeService) { }
+  constructor(private api:UserService, private apiPostcode : PostcodeService,private _profile: UserService) { }
 
   ngOnInit(): void {
+    this._profile.IsLogged.subscribe();
     this.getPostcodes();
     this.formGroupPostcodeChange();
   }
@@ -69,7 +70,7 @@ export class LoginComponent implements OnInit {
     this.user = this.loginForm.value;
 
     this.api.userLogin(this.user).subscribe(data => {
-      console.log(data);
+      this._profile.ProfileBehavior.next(true);
     })
   }
 
