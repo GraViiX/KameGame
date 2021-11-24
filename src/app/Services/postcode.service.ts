@@ -11,7 +11,7 @@ export class PostcodeService {
   constructor(private http:HttpClient) { }
 
   url : string = "https://localhost:44349/api/PostcodeModels/";
-  userLogin():Observable<IPostcode[]>{
+  getPostcodes():Observable<IPostcode[]>{
     return this.http.get<IPostcode[]>(`${this.url}`);
   }
 }
