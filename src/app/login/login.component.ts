@@ -54,12 +54,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this._profile.IsLogged.subscribe();
-    this.getPostcodes();
+    this.getPostcodes(),
     this.formGroupPostcodeChange();
   }
 
   getPostcodes(){
-    this.apiPostcode.userLogin().subscribe((data) => {
+    this.apiPostcode.getPostcodes().subscribe((data) => {
       this.postcodes = data;
       // console.log(data);
 
