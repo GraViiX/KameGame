@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     username : "",
     uPassword : ""
   };
-  //#region validtors
+  //#region Create Form
   CreateAccountForm = new FormGroup({
     Username : new FormControl('',Validators.required),
     uPassword : new FormControl('',[Validators.required, Validators.minLength(8)]),

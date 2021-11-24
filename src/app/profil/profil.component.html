@@ -1,1 +1,95 @@
-<p>profil works!</p>
+<form [formGroup]="EditAccountForm" needs-validation>
+  <h3>Create Account</h3>
+  <div class="mb-3">
+    <label>Username</label>
+    <input type="text" formControlName="Username" required />
+    <div
+      *ngIf="EditAccountForm.get('Username')?.invalid && (EditAccountForm.get('Username')?.dirty || EditAccountForm.get('Username')?.touched)"
+      class="alert text-danger">
+      <div *ngIf="EditAccountForm.get('Username')?.hasError('required')">
+        <p>Invalid Username</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label>Password</label>
+    <input type="text" formControlName="uPassword" required />
+
+    <div *ngFor="let validation of validation_messages.uPassword">
+      <div class="error-message" *ngIf="EditAccountForm.get('uPassword')?.hasError(validation.type) && (EditAccountForm.get('uPassword')?.dirty ||  EditAccountForm.get('uPassword')?.touched)">{{validation.message}}</div>
+    </div>
+
+    <div
+      *ngIf="EditAccountForm.get('uPassword')?.invalid && (EditAccountForm.get('uPassword')?.dirty || EditAccountForm.get('uPassword')?.touched)"
+      class="alert text-danger">
+      <div *ngIf="EditAccountForm.get('uPassword')?.hasError('required')">
+        Invalid Username
+      </div>
+      <div *ngIf="EditAccountForm.get('uPassword')?.hasError('minLength')">
+        Password must be at least 8 characters long
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mb-3">
+    <label>Email</label>
+    <input type="text" formControlName="Email" />
+  </div>
+
+  <div class="mb-3">
+    <label>Tlf</label>
+    <input type="number" formControlName="UTLF">
+  </div>
+
+  <div formGroupName="Card">
+    <div formGroupName="CardType">
+      <div class="mb-3">
+        <label>Card Type</label>
+        <input type="text" formControlName="Type">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>CardNumber</label>
+      <input type="number" formControlName="CardNumber" />
+    </div>
+
+    <div class="mb-3">
+      <label>Expiration date</label>
+      <input type="text" formControlName="CardDate" />
+    </div>
+
+    <div class="mb-3">
+      <label>CVC</label>
+      <input type="number" formControlName="SecurityNumber">
+    </div>
+
+    <div class="mb-3">
+      <label>First Name</label>
+      <input type="text" formControlName="FirstName">
+    </div>
+
+    <div class="mb-3">
+      <label>Last Name</label>
+      <input type="text" formControlName="LastName">
+    </div>
+  </div>
+
+  <div formGroupName="Address">
+    <div formGroupName="PostCode">
+      <div class="mb-3">
+        <label>Postcode</label>
+        <input type="number" formControlName="PostCode">
+      </div>
+      <div class="mb-3">
+        <label>City</label>
+        <input type="text" formControlName="City">
+      </div>
+    </div>
+  </div>
+
+  <button type="button" (click)="Savechange()">Save change</button>
+  <p>Form Status: {{ EditAccountForm.status }}</p>
+</form>
