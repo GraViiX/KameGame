@@ -62,7 +62,7 @@
             <input list="postcodes" formControlName="PostCode" />
             <datalist id="postcodes">
               <div *ngFor="let item of postcodes">
-                <option value="{{ item.postcode }}"></option>
+                <option value="{{ item.postcode }}" text="{{item.city}}"></option>
               </div>
             </datalist>
           </form>
