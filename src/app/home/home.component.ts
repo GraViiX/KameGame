@@ -19,7 +19,13 @@ export class HomeComponent implements OnInit {
   }
 
   AddToCart(item:any){
-
+    this.cart.push({
+      "id": item.id,
+      "name": item.name,
+      "smallImg": item.imgUrlSmall
+    });
+    sessionStorage.setItem('cart', JSON.stringify(this.cart));
+    console.log(sessionStorage.getItem('cart'));
   }
 
   products(){
@@ -36,7 +42,7 @@ export class HomeComponent implements OnInit {
         "desc": element.desc
         });
       }
-      // console.log(this.cardList);
+      //console.log(this.cardList);
     });
   }
 }
