@@ -4,7 +4,7 @@
 
       <form [formGroup]="EditAccountForm" needs-validation>
         <h3>Edit Account</h3>
-        <div class="col-sm-4 mb-3">
+        <div class="col-8 mb-3">
           <label>Username</label>
           <input type="text" formControlName="Username" required />
           <div *ngFor="let validation of validation_messages.Username">
@@ -14,7 +14,7 @@
           </div>
         </div>
 
-        <div class="col-sm-4 mb-3">
+        <div class="col-8 mb-3">
           <label>Password</label>
           <input type="password" formControlName="uPassword" required />
           <div *ngFor="let validation of validation_messages.uPassword">
@@ -25,7 +25,7 @@
         </div>
 
         <div [formGroup]="confirm_passwordForm">
-          <div class="col-sm-4 mb-3">
+          <div class="col-8 mb-3">
             <label>confirm password</label>
           <input type="text" formControlName="confirm_password" required />
           <div *ngFor="let validation of validation_messages.confirm_password">
@@ -36,7 +36,7 @@
           </div>
         </div>
 
-        <div class="col-sm-4 mb-3">
+        <div class="col-8 mb-3">
           <label>Email</label>
           <input type="text" formControlName="Email" required />
           <div *ngFor="let validation of validation_messages.Email">
@@ -46,8 +46,8 @@
           </div>
         </div>
 
-        <div class="col-sm-4 mb-3">
-          <label>Tlf</label>
+        <div class="col-8 mb-3">
+          <label>phone number</label>
           <input type="number" formControlName="UTLF" required>
           <div *ngFor="let validation of validation_messages.UTLF">
             <div class="error-message"
@@ -58,7 +58,7 @@
 
         <div formGroupName="Address">
           <div formGroupName="PostCode">
-            <div class="col-sm-4 mb-3">
+            <div class="col-8 mb-3">
               <label>Postcode</label>
               <input type="number" formControlName="PostCode" required>
               <div *ngFor="let validation of validation_messages.PostCode">
@@ -67,7 +67,7 @@
                   {{validation.message}}</div>
               </div>
             </div>
-            <div class="col-sm-4 mb-3">
+            <div class="col-8 mb-3">
               <label>City</label>
               <input type="text" formControlName="City" required>
               <div *ngFor="let validation of validation_messages.City">

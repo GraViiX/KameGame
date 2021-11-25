@@ -2,6 +2,7 @@ import { visitAll } from '@angular/compiler';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { UserService} from '../Services/user.service';
 
 @Component({
   selector: 'app-profil',
@@ -9,6 +10,8 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn,
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
+
+  constructor(private api:UserService) { }
 
   //#region validation messages
   public validation_messages = {
@@ -18,11 +21,11 @@ export class ProfilComponent implements OnInit {
     'uPassword': [
       { type: 'required', message: 'Password is required' },
       { type: 'minlength', message: 'Password must be at least 8 characters long' },
-      { type: 'passwordStrength', message: 'yess' }
+      { type: 'passwordStrength', message: 'The Password is not strong enough' }
     ],
     'confirm_password': [
       { type: 'required', message: 'Confirm password is required' },
-      { type: 'areEqual', message: 'Password mismatch' }
+      { type: 'confirm', message: 'Password mismatch' }
     ],
     'Email': [
       { type: 'required', message: 'Email is required' },
@@ -64,7 +67,7 @@ export class ProfilComponent implements OnInit {
   //#endregion
 
   //#region edit form
-  EditAccountForm = new FormGroup({
+ public EditAccountForm = new FormGroup({
     Username: new FormControl('', [Validators.required]),
     uPassword: new FormControl('', [Validators.required, Validators.minLength(8), createPasswordStrengthValidator()]),
     Email: new FormControl('', [Validators.required, Validators.email]),
@@ -84,9 +87,11 @@ export class ProfilComponent implements OnInit {
     })
   });
   //#endregion
+  //#region confirm_passwordForm
   confirm_passwordForm = new FormGroup({
-    confirm_password: new FormControl([Validators.required])
+    confirm_password: new FormControl('',[Validators.required, CheckPasswords(this.EditAccountForm.get('uPassword'))])
   })
+  //#endregion
   //#region Add Card Form
   AddCardForm = new FormGroup({
     CardId: new FormControl(0),
@@ -99,12 +104,11 @@ export class ProfilComponent implements OnInit {
     LastName: new FormControl('', Validators.required)
   })
   //#endregion
-  constructor() { }
 
   ngOnInit(): void {
   }
 
-
+  //#region method to upload the changes to the api
   Savechange() {
     console.log(this.EditAccountForm.value);
   }
@@ -112,11 +116,10 @@ export class ProfilComponent implements OnInit {
   AddCard() {
     let firstChar = this.AddCardForm.value.CardNumber.charAt(0);
     console.log(firstChar);
-
   }
-
-
+  //#endregion
 }
+//#region custom validation
 export function createPasswordStrengthValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
 
@@ -137,3 +140,19 @@ export function createPasswordStrengthValidator(): ValidatorFn {
     return !passwordValid ? { passwordStrength: true } : null;
   }
 }
+
+export function CheckPasswords(confirmvalue: any): ValidatorFn{
+  return (control: AbstractControl): ValidationErrors | null =>{
+    const value = control.value;
+
+    if (!value) {
+      return null;
+    }
+    let passwordValid = false
+    if(value == confirmvalue){
+      passwordValid = true
+    }
+    return !passwordValid ? { confirm: true } : null;
+  }
+}
+//#endregion
