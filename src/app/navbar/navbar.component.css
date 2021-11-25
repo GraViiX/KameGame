@@ -1,0 +1,23 @@
+.icon-hover{
+  transition: transform .25s;
+  color: white;
+}
+
+.icon-hover:hover {
+  transform: scale(1.25);
+  color: white;
+}
+
+#footer {
+  position: relative;
+  bottom: 0vh;
+  width: 100%;
+}
+
+.dropdown:hover .dropdown-menu{
+  right: 0;
+  left: auto;
+  display: block;
+
+}
+

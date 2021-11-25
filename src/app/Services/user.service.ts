@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IUser } from '../Interface/iuser';
 
 const httpOptions = {
@@ -14,6 +14,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
+
+  public ProfileBehavior: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public IsLogged: Observable<boolean> = this.ProfileBehavior.asObservable();
 
   constructor(private http:HttpClient) { }
 

@@ -3,62 +3,73 @@
 <form [formGroup]="loginForm">
   <h3>Login</h3>
   <label>Username</label>
-  <input type="text" formControlName="username">
+  <input type="text" formControlName="username" />
   <label>Password</label>
-  <input type="text" formControlName="uPassword">
+  <input type="text" formControlName="uPassword" />
   <button type="button" (click)="LoginClick()">Login</button>
-  <button type="button" data-bs-toggle="modal" data-bs-target="#CreateAccount">Create Account</button>
+  <button type="button" data-bs-toggle="modal" data-bs-target="#CreateAccount">
+    Create Account
+  </button>
 </form>
-
 
 <div class="modal fade" id="CreateAccount" tabindex="-1" aria-labelledby="CreateAccountLabel" aria-hidden="true">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header bg-dark text-white-50">
-              <h5 class="modal-title" id="CreateAccountLabel">Create Account</h5>
-          </div>
-          <div class="modal-body bg-success">
-            <form [formGroup]="CreateAccountForm" name="formAccount">
-              <h3>Create Account</h3>
-              <div class="mb-3">
-                <label>Username</label>
-                <input type="text" formControlName="Username" #banan>
-              </div>
-
-              <div class="mb-3">
-
-              <label>Password</label>
-              <input type="text" formControlName="uPassword">
-              </div>
-
-             <div class="mb-3">
-              <label>Email</label>
-              <input type="text" formControlName="Email">
-             </div>
-
-              <div class="mb-3">
-                <label>Tlf</label>
-              <input type="number" formControlName="UTLF">
-              </div>
-
-              <h4>Address</h4>
-              <div formGroupName="Address">
-                <div class="mb-3">
-
-                <label>Post Code</label>
-                </div>
-
-                <div class="mb-3">
-                  <label>Streetnames</label>
-                  <input type="text" formControlName="StreetNames">
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer bg-dark">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-success" (click)="CreateAccount()">Save Account</button>
-          </div>
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white-50">
+        <h5 class="modal-title" id="CreateAccountLabel">Create Account</h5>
       </div>
+      <div class="modal-body bg-success">
+        <form [formGroup]="CreateAccountForm">
+          <h3>Create Account</h3>
+          <div class="mb-3">
+            <label>Username</label>
+            <input type="text" formControlName="Username" />
+          </div>
+
+          <div class="mb-3">
+            <label>Password</label>
+            <input type="text" formControlName="uPassword" />
+          </div>
+
+          <div class="mb-3">
+            <label>Email</label>
+            <input type="text" formControlName="Email" />
+          </div>
+          <div class="mb-3">
+            <label>Tlf</label>
+            <input type="number" formControlName="UTLF">
+          </div>
+
+
+          <h4>Address</h4>
+          <div formGroupName="Address">
+
+            <div class="mb-3">
+              <label>Streetnames</label>
+              <input type="text" formControlName="StreetNames" />
+            </div>
+          </div>
+        </form>
+        <div class="mb-3">
+          <label>Postcode</label>
+          <form [formGroup]="postcodeForm">
+            <input list="postcodes" formControlName="PostCode" />
+            <datalist id="postcodes">
+              <div *ngFor="let item of postcodes">
+                <option value="{{ item.postcode }}" text="{{item.city}}"></option>
+              </div>
+            </datalist>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-success" (click)="CreateAccount()">
+          Save Account
+        </button>
+      </div>
+    </div>
   </div>
 </div>
