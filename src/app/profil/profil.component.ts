@@ -1,7 +1,7 @@
 import { visitAll } from '@angular/compiler';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profil',
@@ -17,7 +17,8 @@ export class ProfilComponent implements OnInit {
     ],
     'uPassword': [
       { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 8 characters long' }
+      { type: 'minlength', message: 'Password must be at least 8 characters long' },
+      { type: 'passwordStrength', message: 'yess' }
     ],
     'confirm_password': [
       { type: 'required', message: 'Confirm password is required' },
@@ -65,7 +66,7 @@ export class ProfilComponent implements OnInit {
   //#region edit form
   EditAccountForm = new FormGroup({
     Username: new FormControl('', [Validators.required]),
-    uPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    uPassword: new FormControl('', [Validators.required, Validators.minLength(8), createPasswordStrengthValidator()]),
     Email: new FormControl('', [Validators.required, Validators.email]),
     UTLF: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{8}")]),
     CardId: new FormControl(0),
@@ -83,7 +84,9 @@ export class ProfilComponent implements OnInit {
     })
   });
   //#endregion
-
+  confirm_passwordForm = new FormGroup({
+    confirm_password: new FormControl([Validators.required])
+  })
   //#region Add Card Form
   AddCardForm = new FormGroup({
     CardId: new FormControl(0),
@@ -112,4 +115,25 @@ export class ProfilComponent implements OnInit {
 
   }
 
+
+}
+export function createPasswordStrengthValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+
+    const value = control.value;
+
+    if (!value) {
+      return null;
+    }
+
+    const hasUpperCase = /[A-Z]+/.test(value);
+
+    const hasLowerCase = /[a-z]+/.test(value);
+
+    const hasNumeric = /[0-9]+/.test(value);
+
+    const passwordValid = hasUpperCase && hasLowerCase && hasNumeric;
+
+    return !passwordValid ? { passwordStrength: true } : null;
+  }
 }

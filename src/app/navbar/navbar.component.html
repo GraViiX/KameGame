@@ -16,13 +16,18 @@
       </li>
     </ul>
   </div>
+  <div>
+    <button class="btn btn-lg rounded-circle">
+      <i class="fa-solid  fa-cart-shopping icon-hover"></i>
+    </button>
+  </div>
   <form *ngIf="(this._profile.IsLogged  | async)== false">
-    <button class="btn btn-sm rounded-circle" routerLink="/login"  type="button" >
+    <button class="btn btn-lg rounded-circle" routerLink="/login"  type="button" >
         <i class="far fa-user icon-hover"></i>
      </button>
  </form>
  <div class="dropdown" *ngIf="(this._profile.IsLogged  | async)== true">
-  <button class="btn btn-sm  text-success rounded-circle dropdown-toggle" type="button" id="LoginButton" data-bs-toggle="collapse"
+  <button class="btn btn-lg  text-success rounded-circle dropdown-toggle" type="button" id="LoginButton" data-bs-toggle="collapse"
   data-bs-auto-close="true" aria-expanded="false" ><i class="fas fa-user fa-2x icon-hover" aria-label="Toggle navigation"></i>
   </button>
   <ul class="dropdown-menu" aria-labelledby="LoginButton" >
