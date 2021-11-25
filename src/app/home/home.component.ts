@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { YugiohService } from '../Services/yugioh.service';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +12,20 @@ export class HomeComponent implements OnInit {
 
   public cardData:any;
   public cardList:any = [];
+  public cart:any = [];
 
   ngOnInit(): void {
     this.products();
+  }
+
+  AddToCart(item:any){
+    this.cart.push({
+      "id": item.id,
+      "name": item.name,
+      "smallImg": item.imgUrlSmall
+    });
+    sessionStorage.setItem('cart', JSON.stringify(this.cart));
+    console.log(sessionStorage.getItem('cart'));
   }
 
   products(){
@@ -28,13 +38,11 @@ export class HomeComponent implements OnInit {
         "id": element.id,
         "name": element.name,
         "imgUrl": element.card_images[0].image_url,
+        "imgUrlSmall": element.card_images[0].image_url_small,
         "desc": element.desc
         });
       }
-      console.log(this.cardList);
+      //console.log(this.cardList);
     });
   }
 }
-    /*$("#cardImage").attr("src", this.cardData.data[0].card_images[0].image_url.toString());
-      $("#display").append(this.cardData.data[0].name.toString());
-      $("#effectCard").append(this.cardData.data[0].desc.toString());*/
