@@ -3,77 +3,42 @@
   <div class="mb-3">
     <label>Username</label>
     <input type="text" formControlName="Username" required />
-    <div
-      *ngIf="EditAccountForm.get('Username')?.invalid && (EditAccountForm.get('Username')?.dirty || EditAccountForm.get('Username')?.touched)"
-      class="alert text-danger">
-      <div *ngIf="EditAccountForm.get('Username')?.hasError('required')">
-        <p>Invalid Username</p>
-      </div>
+    <div *ngFor="let validation of validation_messages.Username">
+      <div class="error-message"
+        *ngIf="EditAccountForm.get('Username')?.hasError(validation.type) && (EditAccountForm.get('Username')?.dirty ||  EditAccountForm.get('Username')?.touched)">
+        {{validation.message}}</div>
     </div>
   </div>
 
   <div class="mb-3">
     <label>Password</label>
-    <input type="text" formControlName="uPassword" required />
+    <input type="password" formControlName="uPassword" required />
 
     <div *ngFor="let validation of validation_messages.uPassword">
-      <div class="error-message" *ngIf="EditAccountForm.get('uPassword')?.hasError(validation.type) && (EditAccountForm.get('uPassword')?.dirty ||  EditAccountForm.get('uPassword')?.touched)">{{validation.message}}</div>
-    </div>
-
-    <div
-      *ngIf="EditAccountForm.get('uPassword')?.invalid && (EditAccountForm.get('uPassword')?.dirty || EditAccountForm.get('uPassword')?.touched)"
-      class="alert text-danger">
-      <div *ngIf="EditAccountForm.get('uPassword')?.hasError('required')">
-        Invalid Username
-      </div>
-      <div *ngIf="EditAccountForm.get('uPassword')?.hasError('minLength')">
-        Password must be at least 8 characters long
-      </div>
+      <div class="error-message"
+        *ngIf="EditAccountForm.get('uPassword')?.hasError(validation.type) && (EditAccountForm.get('uPassword')?.dirty ||  EditAccountForm.get('uPassword')?.touched)">
+        {{validation.message}}</div>
     </div>
 
   </div>
 
   <div class="mb-3">
     <label>Email</label>
-    <input type="text" formControlName="Email" />
+    <input type="text" formControlName="Email" required />
+    <div *ngFor="let validation of validation_messages.Email">
+      <div class="error-message"
+        *ngIf="EditAccountForm.get('Email')?.hasError(validation.type) && (EditAccountForm.get('Email')?.dirty ||  EditAccountForm.get('Email')?.touched)">
+        {{validation.message}}</div>
+    </div>
   </div>
 
   <div class="mb-3">
     <label>Tlf</label>
-    <input type="number" formControlName="UTLF">
-  </div>
-
-  <div formGroupName="Card">
-    <div formGroupName="CardType">
-      <div class="mb-3">
-        <label>Card Type</label>
-        <input type="text" formControlName="Type">
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label>CardNumber</label>
-      <input type="number" formControlName="CardNumber" />
-    </div>
-
-    <div class="mb-3">
-      <label>Expiration date</label>
-      <input type="text" formControlName="CardDate" />
-    </div>
-
-    <div class="mb-3">
-      <label>CVC</label>
-      <input type="number" formControlName="SecurityNumber">
-    </div>
-
-    <div class="mb-3">
-      <label>First Name</label>
-      <input type="text" formControlName="FirstName">
-    </div>
-
-    <div class="mb-3">
-      <label>Last Name</label>
-      <input type="text" formControlName="LastName">
+    <input type="number" formControlName="UTLF" required>
+    <div *ngFor="let validation of validation_messages.UTLF">
+      <div class="error-message"
+        *ngIf="EditAccountForm.get('UTLF')?.hasError(validation.type) && (EditAccountForm.get('UTLF')?.dirty ||  EditAccountForm.get('UTLF')?.touched)">
+        {{validation.message}}</div>
     </div>
   </div>
 
@@ -81,15 +46,116 @@
     <div formGroupName="PostCode">
       <div class="mb-3">
         <label>Postcode</label>
-        <input type="number" formControlName="PostCode">
+        <input type="number" formControlName="PostCode" required>
+        <div *ngFor="let validation of validation_messages.PostCode">
+          <div class="error-message"
+            *ngIf="EditAccountForm.get('Address')?.get('PostCode')?.get('PostCode')?.hasError(validation.type) && (EditAccountForm.get('Address')?.get('PostCode')?.get('PostCode')?.dirty || EditAccountForm.get('Address')?.get('PostCode')?.get('PostCode')?.touched)">
+            {{validation.message}}</div>
+        </div>
       </div>
       <div class="mb-3">
         <label>City</label>
-        <input type="text" formControlName="City">
+        <input type="text" formControlName="City" required>
+        <div *ngFor="let validation of validation_messages.City">
+          <div class="error-message"
+            *ngIf="EditAccountForm.get('Address')?.get('PostCode')?.get('City')?.hasError(validation.type) && (EditAccountForm.get('Address')?.get('PostCode')?.get('City')?.dirty ||  EditAccountForm.get('Address')?.get('PostCode')?.get('City')?.touched)">
+            {{validation.message}}</div>
+        </div>
       </div>
     </div>
   </div>
-
+  <button type="button" data-bs-toggle="modal" data-bs-target="#AddCard">
+    Add credit card
+  </button>
   <button type="button" (click)="Savechange()">Save change</button>
-  <p>Form Status: {{ EditAccountForm.status }}</p>
 </form>
+
+<div class="modal fade" id="AddCard" tabindex="-1" aria-labelledby="AddCard" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <strong>Credit Card</strong>
+        <small>enter your card details</small>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="AddCardForm" needs-validation>
+          <div class="row">
+            <div class="col-sm-12 mb-3">
+              <label>FirstName</label>
+              <input type="text" formControlName="FirstName" required>
+              <div *ngFor="let validation of validation_messages.FirstName">
+                <div class="error-message"
+                  *ngIf="AddCardForm.get('FirstName')?.hasError(validation.type) && (AddCardForm.get('FirstName')?.dirty ||  AddCardForm.get('FirstName')?.touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 mb-3">
+              <label>CardNumber</label>
+              <input type="text" formControlName="CardNumber" placeholder="0000 0000 0000 0000" required>
+              <div *ngFor="let validation of validation_messages.CardNumber">
+                <div class="error-message"
+                  *ngIf="AddCardForm.get('CardNumber')?.hasError(validation.type) && (AddCardForm.get('CardNumber')?.dirty ||  AddCardForm.get('CardNumber')?.touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-4">
+              <label for="ccmonth">Month</label>
+              <select class="form-control" id="ccmonth">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+              </select>
+            </div>
+            <div class="form-group col-sm-4">
+              <label for="ccyear">Year</label>
+              <select class="form-control" id="ccyear">
+                <option>2014</option>
+                <option>2015</option>
+                <option>2016</option>
+                <option>2017</option>
+                <option>2018</option>
+                <option>2019</option>
+                <option>2020</option>
+                <option>2021</option>
+                <option>2022</option>
+                <option>2023</option>
+                <option>2024</option>
+                <option>2025</option>
+              </select>
+            </div>
+            <div class="col-sm-4">
+              <label>CVV/CVC</label>
+              <input type="number" formControlName="SecurityNumber" placeholder="xxx" required>
+              <div *ngFor="let validation of validation_messages.SecurityNumber">
+                <div class="error-message"
+                  *ngIf="AddCardForm.get('SecurityNumber')?.hasError(validation.type) && (AddCardForm.get('SecurityNumber')?.dirty ||  AddCardForm.get('SecurityNumber')?.touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer bg-dark">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Close
+      </button>
+      <button type="submit" class="btn btn-success" (click)="AddCard()">
+        Save Account
+      </button>
+    </div>
+  </div>
+</div>
