@@ -21,8 +21,9 @@ export class HomeComponent implements OnInit {
     this.cards.getCard().subscribe(res => {
       this.cardData = res;
       console.log(this.cardData.data[0]);
-      $("#display").append(this.cardData.data[0].name.toString());
       $("#cardImage").attr("src", this.cardData.data[0].card_images[0].image_url.toString());
+      $("#display").append(this.cardData.data[0].name.toString());
+      $("#effectCard").append(this.cardData.data[0].desc.toString());
     });
   }
 
