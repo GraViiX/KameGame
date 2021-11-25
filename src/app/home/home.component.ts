@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { YugiohService } from '../Services/yugioh.service';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home',
@@ -41,6 +40,3 @@ export class HomeComponent implements OnInit {
     });
   }
 }
-    /*$("#cardImage").attr("src", this.cardData.data[0].card_images[0].image_url.toString());
-      $("#display").append(this.cardData.data[0].name.toString());
-      $("#effectCard").append(this.cardData.data[0].desc.toString());*/

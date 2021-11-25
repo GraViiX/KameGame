@@ -1,0 +1,6 @@
+.truncate-t{
+  --max-lines: 4;
+  --lh: 1.2rem;
+  max-height: calc(var(--lh) * var(--max-lines));
+  overflow: hidden;
+}
