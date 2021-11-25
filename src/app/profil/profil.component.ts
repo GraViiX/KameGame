@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./profil.component.css']
 })
 export class ProfilComponent implements OnInit {
+
   //#region validation messages
   public validation_messages = {
     'Username': [
@@ -40,8 +41,8 @@ export class ProfilComponent implements OnInit {
       { type: 'required', message: 'Card Date is required' }
     ],
     'SecurityNumber': [
-      { type: 'required', message: 'SecurityNumber is required' },
-      { type: 'pattern', message: 'Enter a valid securityNumber' }
+      { type: 'required', message: 'CVV/CVC is required' },
+      { type: 'pattern', message: 'Enter a valid CVV/CVC' }
     ],
     'FirstName': [
       { type: 'required', message: 'FirstName is required' }
@@ -108,7 +109,6 @@ export class ProfilComponent implements OnInit {
   AddCard() {
     let firstChar = this.AddCardForm.value.CardNumber.charAt(0);
     console.log(firstChar);
-    console.log("hejs");
 
   }
 

@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
     uPassword : new FormControl('',[Validators.required, Validators.minLength(8)]),
     Email : new FormControl('',[Validators.required , Validators.email]),
     UTLF : new FormControl(0, [Validators.required , Validators.minLength(8)]),
-    CardId: new FormControl(null),
     Roleid : new FormControl(1),
     AddressId: new FormControl(0),
     Address : new FormGroup({
