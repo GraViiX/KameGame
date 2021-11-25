@@ -17,7 +17,7 @@ export class YugiohService {
 
   constructor(private http:HttpClient) { }
   public cardName:string = "";
-  url : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?name=tornado%20dragon`;
+  url : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?staple=yes`;
 
   getCard(){
     return this.http.get(`${this.url}`, httpOptions);

@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private cards:YugiohService) { }
 
   public cardData:any;
+  public cardList:any = [];
 
   ngOnInit(): void {
     this.products();
@@ -20,11 +21,20 @@ export class HomeComponent implements OnInit {
   products(){
     this.cards.getCard().subscribe(res => {
       this.cardData = res;
-      console.log(this.cardData.data[0]);
-      $("#cardImage").attr("src", this.cardData.data[0].card_images[0].image_url.toString());
-      $("#display").append(this.cardData.data[0].name.toString());
-      $("#effectCard").append(this.cardData.data[0].desc.toString());
+      //console.log(this.cardData.data);
+      for (let index = 0; index < this.cardData.data.length; index++) {
+        const element = this.cardData.data[index];
+        this.cardList.push({
+        "id": element.id,
+        "name": element.name,
+        "imgUrl": element.card_images[0].image_url,
+        "desc": element.desc
+        });
+      }
+      console.log(this.cardList);
     });
   }
-
 }
+    /*$("#cardImage").attr("src", this.cardData.data[0].card_images[0].image_url.toString());
+      $("#display").append(this.cardData.data[0].name.toString());
+      $("#effectCard").append(this.cardData.data[0].desc.toString());*/

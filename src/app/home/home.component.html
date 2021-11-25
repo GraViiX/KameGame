@@ -1,10 +1,14 @@
-<div class="container-fluid">
-  <div class="card bg-dark text-white" style="width: 18rem;">
-    <img id="cardImage" class="card-img-top" src="" alt="Card image cap">
-    <div class="card-body">
-      <h5 id="display" class="card-title"></h5>
-      <p id="effectCard" class="card-text"></p>
-      <a href="#" class="btn btn-light text-dark">Add to cart</a>
+<div class="container">
+  <div class="row align-items-center">
+    <div *ngFor="let item of cardList" class="col-sm">
+      <div class="card bg-dark text-white" style="width: 18rem;">
+        <img id="cardImage" class="card-img-top" src="{{item.imgUrl}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title text-truncate">{{item.name}}</h5>
+          <p class="card-text text-truncate">{{item.desc}}</p>
+          <a href="#" class="btn btn-light text-dark">Add to cart</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
