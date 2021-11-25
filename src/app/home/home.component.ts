@@ -13,9 +13,14 @@ export class HomeComponent implements OnInit {
 
   public cardData:any;
   public cardList:any = [];
+  public cart:any = [];
 
   ngOnInit(): void {
     this.products();
+  }
+
+  AddToCart(item:any){
+
   }
 
   products(){
@@ -28,10 +33,11 @@ export class HomeComponent implements OnInit {
         "id": element.id,
         "name": element.name,
         "imgUrl": element.card_images[0].image_url,
+        "imgUrlSmall": element.card_images[0].image_url_small,
         "desc": element.desc
         });
       }
-      console.log(this.cardList);
+      // console.log(this.cardList);
     });
   }
 }

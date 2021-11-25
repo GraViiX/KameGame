@@ -6,7 +6,7 @@
         <div class="card-body">
           <h5 class="card-title text-truncate">{{item.name}}</h5>
           <p class="card-text text-truncate">{{item.desc}}</p>
-          <a href="#" class="btn btn-light text-dark">Add to cart</a>
+          <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button>
         </div>
       </div>
     </div>
