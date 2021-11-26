@@ -1,0 +1,15 @@
+<div class="container">
+  <div *ngIf="(cart.length == 0)">
+    <p>Your Cart is empty</p>
+  </div>
+  <div *ngIf="(cart.length != 0)">
+    <div *ngFor="let item of cart">
+      <ul>
+        <li>itemId: {{ item.itemId }}</li>
+        <li>itemName: {{ item.itemName }}</li>
+        <li>itemUrl: {{ item.itemUrlSmall }}</li>
+        <li>amount: {{ item.amount }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
