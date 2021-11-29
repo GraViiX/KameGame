@@ -53,16 +53,16 @@
           <div class="row">
             <div class="col">
               <label>Username</label>
-              <input type="text" formControlName="username" required>
+              <input type="text" formControlName="UserName" required>
               <div *ngFor="let validation of validation_messages.Username">
                 <div class="error-message"
-                  *ngIf="loginForm.get('username')?.hasError(validation.type) && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
+                  *ngIf="loginForm.get('UserName')?.hasError(validation.type) && (loginForm.get('UserName')?.dirty || loginForm.get('UserName')?.touched)">
                   {{validation.message}}</div>
               </div>
             </div>
             <div class="col">
               <label>Password</label>
-              <input type="text" formControlName="username" required>
+              <input type="text" formControlName="uPassword" required>
               <div *ngFor="let validation of validation_messages.uPassword">
                 <div class="error-message"
                   *ngIf="loginForm.get('uPassword')?.hasError(validation.type) && (loginForm.get('uPassword')?.dirty || loginForm.get('uPassword')?.touched)">

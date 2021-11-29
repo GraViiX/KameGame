@@ -72,7 +72,7 @@ export class NavbarComponent implements OnInit {
 
   //#region loginform
   loginForm = new FormGroup({
-    username: new FormControl(''),
+    UserName: new FormControl(''),
     uPassword: new FormControl('')
   })
   //#endregion
@@ -110,7 +110,6 @@ export class NavbarComponent implements OnInit {
   //#endregion
 
   ngOnInit(): void {
-    this.openCreateModal()
     this._profile.IsLogged.subscribe()
     if (localStorage.getItem('id')) {
       this._profile.ProfileBehavior.next(true);
@@ -165,11 +164,8 @@ export class NavbarComponent implements OnInit {
   //#endregion
 
   openCreateModal() {
-    var myModal = document.getElementById('Login')
     var newModal = document.getElementById('openModalButton')
-    myModal?.addEventListener('hidden.bs.modal', function () {
-      newModal?.click();
-    })
+    newModal?.click();
   }
 
 
@@ -179,6 +175,10 @@ export class NavbarComponent implements OnInit {
 
   LogOut() {
     this._profile.ProfileBehavior.next(false);
+    this.loginForm.setValue({
+      UserName:"",
+      uPassword:""
+    })
   }
 
 }
