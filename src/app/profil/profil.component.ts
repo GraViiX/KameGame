@@ -2,7 +2,7 @@ import { visitAll } from '@angular/compiler';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { UserService} from '../Services/user.service';
+import { UserService,createPasswordStrengthValidator,checkPasswords} from '../Services/user.service';
 
 @Component({
   selector: 'app-profil',
@@ -19,12 +19,12 @@ export class ProfilComponent implements OnInit {
       { type: 'required', message: 'Username is required' }
     ],
     'uPassword': [
-      { type: 'required', message: 'Password is required' },
+      { type: 'required', message: 'this is required' },
       { type: 'minlength', message: 'Password must be at least 8 characters long' },
       { type: 'passwordStrength', message: 'The Password is not strong enough' }
     ],
     'confirm_password': [
-      { type: 'required', message: 'Confirm password is required' },
+      { type: 'required', message: 'this password is required' },
       { type: 'confirm', message: 'Password mismatch' }
     ],
     'Email': [
@@ -68,29 +68,33 @@ export class ProfilComponent implements OnInit {
 
   //#region edit form
  public EditAccountForm = new FormGroup({
-    Username: new FormControl('', [Validators.required]),
-    uPassword: new FormControl('', [Validators.required, Validators.minLength(8), createPasswordStrengthValidator()]),
-    Email: new FormControl('', [Validators.required, Validators.email]),
-    UTLF: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{8}")]),
-    CardId: new FormControl(0),
-    Roleid: new FormControl(1),
-    AddressId: new FormControl(0),
-    Address: new FormGroup({
-      AddressId: new FormControl(0),
-      PostCodeId: new FormControl(null, Validators.required),
-      PostCode: new FormGroup({
-        PostCodeId: new FormControl(0),
-        PostCode: new FormControl(null, [Validators.required]),
-        City: new FormControl('', Validators.required)
+    userId: new FormControl(),
+    userName: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    utlf: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{8}")]),
+    roleId: new FormControl(1),
+    role: new FormGroup({
+      roleId: new FormControl(1),
+      role:new FormControl('')
+    }),
+    addressId: new FormControl(0),
+    address: new FormGroup({
+      addressId: new FormControl(0),
+      postCodeId: new FormControl(0),
+      postCode: new FormGroup({
+        postcodeId: new FormControl(0),
+        postcode: new FormControl(null, [Validators.required]),
+        city: new FormControl('', Validators.required)
       }),
-      StreetNames: new FormControl('', Validators.required)
+      streetNames: new FormControl('', Validators.required)
     })
   });
   //#endregion
   //#region confirm_passwordForm
   confirm_passwordForm = new FormGroup({
-    confirm_password: new FormControl('',[Validators.required, CheckPasswords(this.EditAccountForm.get('uPassword'))])
-  })
+    uPassword: new FormControl('', [Validators.required, Validators.minLength(8), createPasswordStrengthValidator()]),
+    confirm_password:new FormControl('',[Validators.required])
+  },{ validators: checkPasswords()})
   //#endregion
   //#region Add Card Form
   AddCardForm = new FormGroup({
@@ -106,10 +110,18 @@ export class ProfilComponent implements OnInit {
   //#endregion
 
   ngOnInit(): void {
+    if(sessionStorage.getItem('id')){
+    this.api.GetUserById(sessionStorage.getItem('id')).subscribe(data=>{
+      console.log(data);
+      console.log(this.EditAccountForm.value);
+      this.EditAccountForm.setValue(data)
+    })
+    }
   }
 
   //#region method to upload the changes to the api
   Savechange() {
+    //this.testForm.addControl('new', new FormControl('', Validators.required));
     console.log(this.EditAccountForm.value);
   }
 
@@ -119,40 +131,4 @@ export class ProfilComponent implements OnInit {
   }
   //#endregion
 }
-//#region custom validation
-export function createPasswordStrengthValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
 
-    const value = control.value;
-
-    if (!value) {
-      return null;
-    }
-
-    const hasUpperCase = /[A-Z]+/.test(value);
-
-    const hasLowerCase = /[a-z]+/.test(value);
-
-    const hasNumeric = /[0-9]+/.test(value);
-
-    const passwordValid = hasUpperCase && hasLowerCase && hasNumeric;
-
-    return !passwordValid ? { passwordStrength: true } : null;
-  }
-}
-
-export function CheckPasswords(confirmvalue: any): ValidatorFn{
-  return (control: AbstractControl): ValidationErrors | null =>{
-    const value = control.value;
-
-    if (!value) {
-      return null;
-    }
-    let passwordValid = false
-    if(value == confirmvalue){
-      passwordValid = true
-    }
-    return !passwordValid ? { confirm: true } : null;
-  }
-}
-//#endregion

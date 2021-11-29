@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this._profile.IsLogged.subscribe()
-    if(localStorage.getItem('token') != null){
+    if(localStorage.getItem('id')){
       this._profile.ProfileBehavior.next(true);
     }
   }

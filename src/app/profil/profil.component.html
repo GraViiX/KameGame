@@ -6,73 +6,71 @@
         <h3>Edit Account</h3>
         <div class="col-8 mb-3">
           <label>Username</label>
-          <input type="text" formControlName="Username" required />
+          <input type="text" formControlName="userName" placeholder="{{EditAccountForm.value.userName}}" required />
           <div *ngFor="let validation of validation_messages.Username">
             <div class="error-message"
-              *ngIf="EditAccountForm.get('Username')?.hasError(validation.type) && (EditAccountForm.get('Username')?.dirty ||  EditAccountForm.get('Username')?.touched)">
+              *ngIf="EditAccountForm.get('userName')?.hasError(validation.type) && (EditAccountForm.get('userName')?.dirty ||  EditAccountForm.get('userName')?.touched)">
               {{validation.message}}</div>
           </div>
         </div>
-
-        <div class="col-8 mb-3">
-          <label>Password</label>
-          <input type="password" formControlName="uPassword" required />
-          <div *ngFor="let validation of validation_messages.uPassword">
-            <div class="error-message"
-              *ngIf="EditAccountForm.get('uPassword')?.hasError(validation.type) && (EditAccountForm.get('uPassword')?.dirty ||  EditAccountForm.get('uPassword')?.touched)">
-              {{validation.message}}</div>
-          </div>
-        </div>
-
         <div [formGroup]="confirm_passwordForm">
           <div class="col-8 mb-3">
-            <label>confirm password</label>
-          <input type="text" formControlName="confirm_password" required />
-          <div *ngFor="let validation of validation_messages.confirm_password">
-            <div class="error-message"
-              *ngIf="confirm_passwordForm.get('confirm_password')?.hasError(validation.type) && (confirm_passwordForm.get('confirm_password')?.dirty ||  confirm_passwordForm.get('confirm_password')?.touched)">
-              {{validation.message}}</div>
+            <label>Password</label>
+            <input type="text" formControlName="uPassword" required />
+            <div *ngFor="let validation of validation_messages.uPassword">
+              <div class="error-message"
+                *ngIf="confirm_passwordForm.get('uPassword')?.hasError(validation.type) && (confirm_passwordForm.get('uPassword')?.dirty ||  confirm_passwordForm.get('uPassword')?.touched)">
+                {{validation.message}}</div>
+            </div>
           </div>
+          <div class="col-8 mb-3">
+            <label>confirm password</label>
+            <input type="text" formControlName="confirm_password" required />
+            <div *ngFor="let validation of validation_messages.confirm_password">
+              <div class="error-message"
+                *ngIf="confirm_passwordForm?.hasError(validation.type) && (confirm_passwordForm.get('confirm_password')?.dirty ||  confirm_passwordForm.get('confirm_password')?.touched)">
+                {{validation.message}}</div>
+            </div>
           </div>
         </div>
 
         <div class="col-8 mb-3">
           <label>Email</label>
-          <input type="text" formControlName="Email" required />
+          <input type="text" formControlName="email" required />
           <div *ngFor="let validation of validation_messages.Email">
             <div class="error-message"
-              *ngIf="EditAccountForm.get('Email')?.hasError(validation.type) && (EditAccountForm.get('Email')?.dirty ||  EditAccountForm.get('Email')?.touched)">
+              *ngIf="EditAccountForm.get('email')?.hasError(validation.type) && (EditAccountForm.get('email')?.dirty ||  EditAccountForm.get('email')?.touched)">
               {{validation.message}}</div>
           </div>
         </div>
 
         <div class="col-8 mb-3">
           <label>phone number</label>
-          <input type="number" formControlName="UTLF" required>
+          <input type="number" formControlName="utlf" required>
           <div *ngFor="let validation of validation_messages.UTLF">
             <div class="error-message"
-              *ngIf="EditAccountForm.get('UTLF')?.hasError(validation.type) && (EditAccountForm.get('UTLF')?.dirty ||  EditAccountForm.get('UTLF')?.touched)">
+              *ngIf="EditAccountForm.get('utlf')?.hasError(validation.type) && (EditAccountForm.get('utlf')?.dirty ||  EditAccountForm.get('utlf')?.touched)">
               {{validation.message}}</div>
           </div>
         </div>
 
-        <div formGroupName="Address">
-          <div formGroupName="PostCode">
+        <div formGroupName="address">
+          <div formGroupName="postCode">
             <div class="col-8 mb-3">
               <label>Postcode</label>
-              <input type="number" formControlName="PostCode" required>
+              <input type="number" formControlName="postcode" required>
               <div *ngFor="let validation of validation_messages.PostCode">
                 <div class="error-message"
-                  *ngIf="EditAccountForm.get('Address')?.get('PostCode')?.get('PostCode')?.hasError(validation.type) && (EditAccountForm.get('Address')?.get('PostCode')?.get('PostCode')?.dirty || EditAccountForm.get('Address')?.get('PostCode')?.get('PostCode')?.touched)">
+                  *ngIf="EditAccountForm.get('address')?.get('postCode')?.get('postcode')?.hasError(validation.type) && (EditAccountForm.get('address')?.get('postCode')?.get('postcode')?.dirty || EditAccountForm.get('address')?.get('postCode')?.get('postcode')?.touched)">
                   {{validation.message}}</div>
               </div>
             </div>
             <div class="col-8 mb-3">
               <label>City</label>
-              <input type="text" formControlName="City" required>
+              <input type="text" formControlName="city" required>
               <div *ngFor="let validation of validation_messages.City">
                 <div class="error-message"
-                  *ngIf="EditAccountForm.get('Address')?.get('PostCode')?.get('City')?.hasError(validation.type) && (EditAccountForm.get('Address')?.get('PostCode')?.get('City')?.dirty ||  EditAccountForm.get('Address')?.get('PostCode')?.get('City')?.touched)">
+                  *ngIf="EditAccountForm.get('address')?.get('postCode')?.get('city')?.hasError(validation.type) && (EditAccountForm.get('address')?.get('postCode')?.get('city')?.dirty ||  EditAccountForm.get('address')?.get('postCode')?.get('city')?.touched)">
                   {{validation.message}}</div>
               </div>
             </div>
