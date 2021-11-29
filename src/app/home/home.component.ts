@@ -32,11 +32,20 @@ export class HomeComponent implements OnInit {
   }
 
   AddToCart(item: any) {
-    this.cart.push({
-      id: item.id,
-      name: item.name,
-      smallImg: item.imgUrlSmall,
-    });
+    let recurring = this.cart.find((data: any)  => data.id == item.id);
+
+    if (recurring != null) {
+      this.cart[this.cart.indexOf(recurring)].amount += 1;
+    }
+    else {
+      this.cart.push({
+        id: item.id,
+        name: item.name,
+        smallImg: item.imgUrlSmall,
+        amount: 1
+      });
+    }
+
     sessionStorage.setItem('cart', JSON.stringify(this.cart));
     console.log(sessionStorage.getItem('cart'));
   }
