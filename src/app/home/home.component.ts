@@ -64,7 +64,6 @@ export class HomeComponent implements OnInit {
           desc: element.desc,
         });
       }
-      //console.log(this.cardList);
     });
   }
 }
