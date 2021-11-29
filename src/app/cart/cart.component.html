@@ -1,15 +1,54 @@
 <div class="container">
-  <div *ngIf="(cart.length == 0)">
-    <p>Your Cart is empty</p>
-  </div>
-  <div *ngIf="(cart.length != 0)">
-    <div *ngFor="let item of cart">
-      <ul>
-        <li>itemId: {{ item.itemId }}</li>
-        <li>itemName: {{ item.itemName }}</li>
-        <li>itemUrl: {{ item.itemUrlSmall }}</li>
-        <li>amount: {{ item.amount }}</li>
-      </ul>
+  <div class="row">
+    <div class="col-md-10">
+      <div class="row">
+        <div class="col">
+          <h2>Your Cart</h2>
+        </div>
+      </div>
+      <div *ngIf="cart.length == 0">
+        <div class="row border-top">
+          <h4>Your cart is empty.</h4>
+        </div>
+      </div>
+      <div class="row border-top">
+        <div class="row align-items-left">
+          <div class="col-2"></div>
+        <div class="col-2">Item Name</div>
+        <div class="col-2">Item Amount</div>
+        <div class="col-2">Item price</div>
+        </div>
+      </div>
+      <div *ngIf="cart.length != 0">
+        <div *ngFor="let item of cart" class="row border-top border-bottom">
+          <div class="row align-items-center">
+            <div class="col-2">
+              <img class="img-fluid" src="{{item.itemUrlSmall}}" />
+            </div>
+            <div class="col-2">
+              <div class="row">{{item.itemName}}</div>
+            </div>
+            <div class="col-2">
+              <button class="btn">-</button>
+              <a class="border bg-light text-dark" style="text-decoration: none; padding: .5rem;">{{item.amount}}</a>
+              <button class="btn">+</button>
+            </div>
+            <div class="col-2">Evt. pris</div>
+            <div class="col-2 align-items-right">
+              <button class="btn">Remove &#10005;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col bg-light text-dark justify-content-md-center">
+      <h5>Checkout</h5>
+      <p class="row border-top">Evt. samlet mængde af items</p>
+      <p class="row border-top">Evt. samlet pris</p>
+      <button class="btn btn-dark text-white">
+        Purchase
+      </button>
     </div>
   </div>
 </div>
