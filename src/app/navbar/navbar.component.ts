@@ -39,29 +39,10 @@ export class NavbarComponent implements OnInit {
       { type: 'required', message: 'UTLF is required' },
       { type: 'pattern', message: 'Enter a valid  phone number' }
     ],
-    'Type': [
-      { type: 'required', message: 'Cardtype is required' }
-    ],
-    'CardNumber': [
-      { type: 'required', message: 'Card Number is required' }
-    ],
-    'CardDate': [
-      { type: 'required', message: 'Card Date is required' }
-    ],
-    'SecurityNumber': [
-      { type: 'required', message: 'CVV/CVC is required' },
-      { type: 'pattern', message: 'Enter a valid CVV/CVC' }
-    ],
-    'FirstName': [
-      { type: 'required', message: 'FirstName is required' }
-    ],
-    'LastName': [
-      { type: 'required', message: 'LastName is required' }
-    ],
     'PostCode': [
       { type: 'required', message: 'PostCode is required' }
     ],
-    'City': [
+    'City': [ //city need to be validators?
       { type: 'required', message: 'City is required' }
     ],
     'StreetNames': [
@@ -82,12 +63,11 @@ export class NavbarComponent implements OnInit {
     Username: new FormControl('', Validators.required),
     uPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
     Email: new FormControl('', [Validators.required, Validators.email]),
-    UTLF: new FormControl(0, [Validators.required, Validators.minLength(8)]),
+    UTLF: new FormControl(null, [Validators.required, Validators.minLength(8)]),
     Roleid: new FormControl(1),
     AddressId: new FormControl(0),
     Address: new FormGroup({
       AddressId: new FormControl(0),
-      // For at få denne, skal der laves et get statement på PostCode tabellen, hvor vi returnere ID. Postcode sætter vi i en liste, som man kan søge i.
       PostCodeId: new FormControl(null, Validators.required),
       StreetNames: new FormControl('', Validators.required)
     })
@@ -110,19 +90,19 @@ export class NavbarComponent implements OnInit {
   //#endregion
 
   ngOnInit(): void {
-    this._profile.IsLogged.subscribe()
+    this._profile.IsLogged.subscribe() //to change the user icon in the navbar
     if (localStorage.getItem('id')) {
-      this._profile.ProfileBehavior.next(true);
+      this._profile.ProfileBehavior.next(true); // change the user icon to a dropdown menu where the user can logout or go til edit
     }
-    this.getPostcodes()
-    this.formGroupPostcodeChange();
+    this.getPostcodes() // get the postcode from the api
+    this.formGroupPostcodeChange(); // make it so we can handle that postcodeid need a number to make a user
   }
 
   //#region login
   LoginClick() {
-    this.api.userLogin(this.loginForm.value).subscribe(data => {
-      sessionStorage.setItem('id', data.toString())
-      this._profile.ProfileBehavior.next(true);
+    this.api.userLogin(this.loginForm.value).subscribe(data => { // call the api to see if the user exist in the database
+      sessionStorage.setItem('id', data.toString()) // add the user id to sessionStorage we need to do this to the token
+      this._profile.ProfileBehavior.next(true); // change the user icon to a dropdown menu where the user can logout or go til edit
     })
   }
 
@@ -130,12 +110,13 @@ export class NavbarComponent implements OnInit {
 
   //#region getPoscodes
   getPostcodes() {
-    this.apiPostcode.getPostcodes().subscribe((data) => {
-      this.postcodes = data;
-      // console.log(data);
+    this.apiPostcode.getPostcodes().subscribe((data) => { // get all the postcode from the database
+      this.postcodes = data;  //add it to a variable so we can handle it in html
     })
   }
-  formGroupPostcodeChange() {
+  /* get FormControl where we set the postcode and make a subscribe on valueChanges so that each time the value changes,
+  we can select the id for the element the user has select*/
+  formGroupPostcodeChange() { //maybe look at it again
     this.postcodeForm.get('PostCode')?.valueChanges.subscribe((data: any) => {
       this.postcode = this.postcodes.filter(function (element) {
         if (element.postcode == data) {
@@ -163,6 +144,7 @@ export class NavbarComponent implements OnInit {
   }
   //#endregion
 
+  //open the create modal
   openCreateModal() {
     var newModal = document.getElementById('openModalButton')
     newModal?.click();
@@ -172,7 +154,7 @@ export class NavbarComponent implements OnInit {
   GoToHome() {
     this._router.navigate(['/home'])
   }
-
+  //logout the user and set the loginform to "null" and change the user icon back to a button
   LogOut() {
     this._profile.ProfileBehavior.next(false);
     this.loginForm.setValue({

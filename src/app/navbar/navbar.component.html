@@ -1,3 +1,4 @@
+<!--#region navbar-->
 <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Yu-Gi-Oh!</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
@@ -38,10 +39,9 @@
     </ul>
   </div>
 </nav>
+<!--#endregion-->
 
-
-
-
+<!--#region Login Modal-->
 <div class="modal fade" id="Login" tabindex="-1" aria-labelledby="Login" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -86,9 +86,12 @@
     </div>
   </div>
 </div>
+<!--#endregion-->
 
+<!--button to open create model-->
 <button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#CreateAccount"></button>
 
+<!--#region Create Modal-->
 <div class="modal fade" id="CreateAccount" tabindex="-1" aria-labelledby="CreateAccountLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -153,7 +156,7 @@
                 <input list="postcodes" formControlName="PostCode" />
                 <datalist id="postcodes">
                   <div *ngFor="let item of postcodes">
-                    <option value="{{ item.postcode }}" text="{{item.city}}"></option>
+                    <option value="{{ item.postcode }}" text="{{item.city}}"></option> <!--city need to be displayed?-->
                   </div>
                 </datalist>
               </form>
@@ -185,3 +188,4 @@
     </div>
   </div>
 </div>
+<!--#endregion-->
