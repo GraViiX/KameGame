@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { IUser } from '../Interface/iuser';
 
@@ -28,4 +28,40 @@ export class UserService {
   UserCreate(UserToCreate:IUser):Observable<IUser>{
     return this.http.post<IUser>(`${this.url}CreateUser`,UserToCreate,httpOptions)
   }
+
+  GetUserById(id:any):Observable<IUser>{
+    return this.http.get<IUser>(`${this.url}GetUser/${id}`)
+  }
 }
+//https://localhost:44349/api/UserModels/GetUser/8
+
+//#region custom validation
+export function createPasswordStrengthValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+
+    const value = control.value;
+
+    if (!value) {
+      return null;
+    }
+
+    const hasUpperCase = /[A-Z]+/.test(value);
+
+    const hasLowerCase = /[a-z]+/.test(value);
+
+    const hasNumeric = /[0-9]+/.test(value);
+
+    const passwordValid = hasUpperCase && hasLowerCase && hasNumeric;
+
+    return !passwordValid ? { passwordStrength: true } : null;
+  }
+}
+
+export function checkPasswords(): ValidatorFn{
+  return (group: AbstractControl):  ValidationErrors | null => {
+    let pass = group.get('uPassword')?.value;
+    let confirmPass = group.get('confirm_password')?.value
+    return pass === confirmPass ? null : { confirm: true }
+  }
+}
+//#endregion

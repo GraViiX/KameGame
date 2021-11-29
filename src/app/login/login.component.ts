@@ -23,10 +23,11 @@ export class LoginComponent implements OnInit {
     username : new FormControl('' ),
     uPassword : new FormControl('')
   })
-  user : IUser = {
+  /*user : IUser = {
     username : "",
     uPassword : ""
-  };
+  };*/
+
   //#region Create Form
   CreateAccountForm = new FormGroup({
     Username : new FormControl('',Validators.required),
@@ -61,14 +62,14 @@ export class LoginComponent implements OnInit {
     this.apiPostcode.getPostcodes().subscribe((data) => {
       this.postcodes = data;
       // console.log(data);
-
     })
   }
 
   LoginClick() {
-    this.user = this.loginForm.value;
+    //this.user = this.loginForm.value;
 
-    this.api.userLogin(this.user).subscribe(data => {
+    this.api.userLogin(this.loginForm.value).subscribe(data => {
+      sessionStorage.setItem('id',data.toString())
       this._profile.ProfileBehavior.next(true);
     })
   }

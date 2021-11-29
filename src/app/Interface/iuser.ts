@@ -1,7 +1,7 @@
 import { IAddress } from "./iaddress";
 
 export interface IUser {
-  userId? : number,
+  userId : number,
   username : string,
   uPassword : string,
   Email? : string,
