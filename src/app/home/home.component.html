@@ -1,11 +1,12 @@
 <div class="container">
+  <h1 class="text-center pt-4">YU-GI-OH! 2021 STAPLE CARDS</h1>
   <div class="row align-items-center">
     <div *ngFor="let item of cardList" class="col-sm pb-4 pt-4">
       <div class="card bg-dark text-white" style="width: 18rem;">
         <img id="cardImage" class="card-img-top" src="{{item.imgUrl}}" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title text-truncate">{{item.name}}</h5>
-          <p class="card-text text-truncate">{{item.desc}}</p>
+          <p class="card-text truncate-t">{{item.desc}}</p>
           <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button>
         </div>
       </div>
