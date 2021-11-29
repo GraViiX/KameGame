@@ -112,8 +112,6 @@ export class ProfilComponent implements OnInit {
   ngOnInit(): void {
     if(sessionStorage.getItem('id')){
     this.api.GetUserById(sessionStorage.getItem('id')).subscribe(data=>{
-      console.log(data);
-      console.log(this.EditAccountForm.value);
       this.EditAccountForm.setValue(data)
     })
     }

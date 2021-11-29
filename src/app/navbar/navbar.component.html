@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Yu-Gi-Oh!</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
@@ -22,17 +23,165 @@
     </button>
   </div>
   <form *ngIf="(this._profile.IsLogged  | async)== false">
-    <button class="btn btn-lg rounded-circle" routerLink="/login"  type="button" >
-        <i class="far fa-user icon-hover"></i>
-     </button>
- </form>
- <div class="dropdown" *ngIf="(this._profile.IsLogged  | async)== true">
-  <button class="btn btn-lg text-light rounded-circle dropdown-toggle" type="button" id="LoginButton" data-bs-toggle="collapse"
-  data-bs-auto-close="true" aria-expanded="false" ><i class="fas fa-user icon-hover" aria-label="Toggle navigation"></i>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="LoginButton" >
+    <button class="btn btn-lg rounded-circle" data-bs-toggle="modal" data-bs-target="#Login" type="button">
+      <i class="far fa-user icon-hover"></i>
+    </button>
+  </form>
+  <div class="dropdown" *ngIf="(this._profile.IsLogged  | async)== true">
+    <button class="btn btn-lg text-light rounded-circle dropdown-toggle" type="button" id="LoginButton"
+      data-bs-toggle="collapse" data-bs-auto-close="true" aria-expanded="false"><i class="fas fa-user icon-hover"
+        aria-label="Toggle navigation"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="LoginButton">
       <li><a class="dropdown-item" routerLink="/profil">Edit Profile</a></li>
       <li><a class="dropdown-item" routerLink="/home" (click)="LogOut()">Log out</a></li>
-  </ul>
-</div>
+    </ul>
+  </div>
 </nav>
+
+
+
+
+<div class="modal fade" id="Login" tabindex="-1" aria-labelledby="Login" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white-50">
+        <h5 class="modal-title" id="Login">Create Account</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="loginForm" needs-validation>
+          <div class="row">
+            <div class="col">
+              <label>Username</label>
+              <input type="text" formControlName="username" required>
+              <div *ngFor="let validation of validation_messages.Username">
+                <div class="error-message"
+                  *ngIf="loginForm.get('username')?.hasError(validation.type) && (loginForm.get('username')?.dirty || loginForm.get('username')?.touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+            <div class="col">
+              <label>Password</label>
+              <input type="text" formControlName="username" required>
+              <div *ngFor="let validation of validation_messages.uPassword">
+                <div class="error-message"
+                  *ngIf="loginForm.get('uPassword')?.hasError(validation.type) && (loginForm.get('uPassword')?.dirty || loginForm.get('uPassword')?.touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="openCreateModal()" data-bs-dismiss="modal">
+          Create Account
+        </button>
+        <button type="submit" class="btn btn-success" (click)="LoginClick()">
+          Login
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="openModalButton" [hidden]="true" data-bs-toggle="modal" data-bs-target="#CreateAccount"></button>
+
+<div class="modal fade" id="CreateAccount" tabindex="-1" aria-labelledby="CreateAccountLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white-50">
+        <h5 class="modal-title" id="CreateAccountLabel">Create Account</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <form [formGroup]="CreateAccountForm">
+            <h3>Create Account</h3>
+            <div class="col-sm-4 mb-3">
+              <label>Username</label>
+              <input type="text" formControlName="Username" required />
+              <div *ngFor="let validation of validation_messages.Username">
+                <div class="error-message"
+                  *ngIf="CreateAccountForm.get('Username')?.hasError(validation.type) && (CreateAccountForm.get('Username')?.dirty ||  CreateAccountForm.get('Username')?.touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+            <div [formGroup]="confirm_passwordForm">
+              <div class="col-sm-4 mb-3">
+                <label>Password</label>
+                <input type="text" formControlName="uPassword" required />
+                <div *ngFor="let validation of validation_messages.uPassword">
+                  <div class="error-message"
+                    *ngIf="confirm_passwordForm.get('uPassword')?.hasError(validation.type) && (confirm_passwordForm.get('uPassword')?.dirty ||  confirm_passwordForm.get('uPassword')?.touched)">
+                    {{validation.message}}</div>
+                </div>
+              </div>
+              <div class="col-8 mb-3">
+                <label>confirm password</label>
+                <input type="text" formControlName="confirm_password" required />
+                <div *ngFor="let validation of validation_messages.confirm_password">
+                  <div class="error-message"
+                    *ngIf="confirm_passwordForm?.hasError(validation.type) && (confirm_passwordForm.get('confirm_password')?.dirty ||  confirm_passwordForm.get('confirm_password')?.touched)">
+                    {{validation.message}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+              <label>Email</label>
+              <input type="text" formControlName="Email" required />
+              <div *ngFor="let validation of validation_messages.Email">
+                <div class="error-message"
+                  *ngIf="CreateAccountForm.get('Email')?.hasError(validation.type) && (CreateAccountForm.get('Email')?.dirty ||  CreateAccountForm.get('Email')?.touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+              <label>phone number</label>
+              <input type="text" formControlName="UTLF" required />
+              <div *ngFor="let validation of validation_messages.UTLF">
+                <div class="error-message"
+                  *ngIf="CreateAccountForm.get('UTLF')?.hasError(validation.type) && (CreateAccountForm.get('UTLF')?.dirty ||  CreateAccountForm.get('UTLF')?.touched)">
+                  {{validation.message}}</div>
+              </div>
+            </div>
+            <h4>Address</h4>
+            <div class="mb-3">
+              <label>Postcode</label>
+              <form [formGroup]="postcodeForm">
+                <input list="postcodes" formControlName="PostCode" />
+                <datalist id="postcodes">
+                  <div *ngFor="let item of postcodes">
+                    <option value="{{ item.postcode }}" text="{{item.city}}"></option>
+                  </div>
+                </datalist>
+              </form>
+            </div>
+            <div formGroupName="Address">
+              <div class="col-sm-4 mb-3">
+                <label>StreetNames</label>
+                <input type="text" formControlName="StreetNames" required />
+                <div *ngFor="let validation of validation_messages.StreetNames">
+                  <div class="error-message"
+                    *ngIf="CreateAccountForm.get('Address')?.get('StreetNames')?.hasError(validation.type) && (CreateAccountForm.get('Address')?.get('StreetNames')?.dirty ||  CreateAccountForm.get('Address')?.get('StreetNames')?.touched)">
+                    {{validation.message}}</div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+        </div>
+      </div>
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-success" (click)="CreateAccount()">
+          Save Account
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
