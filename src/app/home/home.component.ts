@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
 
 
   products() {
-    this.cards.getCard().subscribe((res) => {
+    this.cards.getStaple().subscribe((res) => {
       this.cardData = res;
       //console.log(this.cardData.data);
       for (let index = 0; index < this.cardData.data.length; index++) {

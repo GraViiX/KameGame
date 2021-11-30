@@ -14,13 +14,17 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class YugiohService {
-
   constructor(private http:HttpClient) { }
   public cardName:string = "";
-  url : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?staple=yes`;
+  urlStaple : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?staple=yes`;
+  urlAll : string =`https://db.ygoprodeck.com/api/v7/cardinfo.php?&num=64&offset=0&view=List&misc=yes`
 
-  getCard(){
-    return this.http.get(`${this.url}`, httpOptions);
+  getStaple(){
+    return this.http.get(`${this.urlStaple}`, httpOptions);
+  }
+
+  getAllCards(){
+    return this.http.get(`${this.urlAll}`, httpOptions);
   }
 }
 
