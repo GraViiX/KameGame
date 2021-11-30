@@ -1,7 +1,12 @@
 <div class="container">
   <h1 class="text-center pt-4">Yu-Gi-Oh! Card Store</h1>
-  <div [formGroup]="Searchform">
-    <input formControlName="Search" type="text" placeholder="Search card">
+  <div class="row text-center">
+    <div [formGroup]="Searchform">
+      <div class="ml-3 mr-3">
+        <label><b> Search </b></label>
+      </div>
+      <input formControlName="Search" class="ml-3 mr-3" type="text" placeholder="Search card">
+    </div>
   </div>
   <div class="row align-items-center">
     <div *ngFor="let item of this.cardData.data" class="col-sm pb-4 pt-4">
