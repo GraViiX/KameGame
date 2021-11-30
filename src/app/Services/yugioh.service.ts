@@ -15,10 +15,9 @@ const httpOptions = {
 })
 export class YugiohService {
   constructor(private http:HttpClient) { }
-  public cardName : string = "";
   urlStaple : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?staple=yes`;
   urlAll : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?&num=32&offset=0&view=List&misc=yes`
-  urlSearch : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?&fname=${this.cardName}&desc=${this.cardName}&num=32&offset=0&view=List&misc=yes`
+
 
   getStaple(){
     return this.http.get(`${this.urlStaple}`, httpOptions);
@@ -39,7 +38,9 @@ export class YugiohService {
   }
 
   searchCard(cardSearch : string){
-    this.cardName = cardSearch;
+    let cardName = cardSearch;
+    let urlSearch : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?&fname=${cardName}&desc=${cardName}&num=32&offset=0&view=List&misc=yes`
+    return this.http.get(`${urlSearch}`, httpOptions);
   }
 
 }

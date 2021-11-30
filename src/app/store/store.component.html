@@ -1,6 +1,8 @@
 <div class="container">
   <h1 class="text-center pt-4">Yu-Gi-Oh! Card Store</h1>
-  <input type="text" placeholder="Search card">
+  <div [formGroup]="Searchform">
+    <input formControlName="Search" type="text" placeholder="Search card">
+  </div>
   <div class="row align-items-center">
     <div *ngFor="let item of this.cardData.data" class="col-sm pb-4 pt-4">
       <div class="card bg-dark text-white" style="width: 18rem;">
