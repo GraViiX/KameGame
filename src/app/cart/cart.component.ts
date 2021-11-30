@@ -20,9 +20,9 @@ export class CartComponent implements OnInit {
     for (let index = 0; index < this.holder.length; index++) {
       const element = this.holder[index];
       this.cart.push({
-        itemId: Number(element.id),
-        itemName: String(element.name),
-        itemUrlSmall: String(element.smallImg),
+        id: Number(element.id),
+        name: String(element.name),
+        smallImg: String(element.smallImg),
         amount: Number(element.amount)
       });
     }
