@@ -29,13 +29,13 @@
               <div class="row">{{item.itemName}}</div>
             </div>
             <div class="col-2">
-              <button class="btn">-</button>
+              <button class="btn" (click)="RemoveAmount(item)">-</button>
               <a class="border bg-light text-dark" style="text-decoration: none; padding: .5rem;">{{item.amount}}</a>
-              <button class="btn">+</button>
+              <button class="btn" (click)="AddAmount(item)">+</button>
             </div>
             <div class="col-2">Evt. pris</div>
             <div class="col-2 align-items-right">
-              <button class="btn">Remove &#10005;</button>
+              <button class="btn" (click)="RemoveItem(item)">Remove &#10005;</button>
             </div>
           </div>
         </div>

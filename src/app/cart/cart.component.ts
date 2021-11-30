@@ -10,33 +10,45 @@ import { ICart } from '../Interface/icart';
 export class CartComponent implements OnInit {
   constructor() {}
 
-  cart: ICart[] = [];
+  cart: any[] = [];
   holder: any;
 
   ngOnInit(): void {
-    this.loadCart();
+    this.holder = JSON.parse(sessionStorage['cart']);
+    console.log(this.holder[0]);
+
+    for (let index = 0; index < this.holder.length; index++) {
+      const element = this.holder[index];
+      this.cart.push({
+        itemId: Number(element.id),
+        itemName: String(element.name),
+        itemUrlSmall: String(element.smallImg),
+        amount: Number(element.amount)
+      });
+    }
+    console.log(this.cart);
   }
 
-  loadCart() {
-    if (sessionStorage['cart'] != null) {
-      this.holder = JSON.parse(sessionStorage['cart']);
-      // console.log(this.holder + "test");
+  RemoveAmount(item: any){
+    if(item.amount == 1){
 
-      // this.holder.forEach(element => {
-      //   this.cart.
-      // });
-      for (let index = 0; index < this.holder.length; index++) {
-        const element = this.holder[index];
-        this.cart.push({
-          itemId: Number(element.id),
-          itemName: String(element.name),
-          itemUrlSmall: String(element.smallImg),
-          amount: Number(element.amount)
-        });
-      }
-    } else if(sessionStorage['cart'] == null) {
-      this.cart.length = 0;
     }
+    else {
+      this.cart[this.cart.indexOf(item)].amount -= 1;
+      // let recurring = this.cart.find((data: any)  => data.id == item.id);
+    }
+    sessionStorage.setItem('cart', JSON.stringify(this.cart));
+    console.log(sessionStorage.getItem('cart'));
+  }
+
+  AddAmount(item: any){
+    item.amount += 1;
+  }
+
+  RemoveItem(item: any){
+
+  }
+
 
     // this.cards.getCard().subscribe(res => {
     //   this.cardData = res;
@@ -53,5 +65,5 @@ export class CartComponent implements OnInit {
     //   }
     //   // console.log(this.cardList);
     // });
-  }
+
 }

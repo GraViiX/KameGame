@@ -16,7 +16,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.products();
+
     this.holder = JSON.parse(sessionStorage['cart']);
+    console.log(this.holder[0]);
 
     for (let index = 0; index < this.holder.length; index++) {
       const element = this.holder[index];
@@ -48,6 +50,7 @@ export class HomeComponent implements OnInit {
     sessionStorage.setItem('cart', JSON.stringify(this.cart));
     console.log(sessionStorage.getItem('cart'));
   }
+
 
   products() {
     this.cards.getCard().subscribe((res) => {
