@@ -1,7 +1,20 @@
 <div class="container">
-  <div class="row">
-    <div class="col">
-      <input type="text" placeholder="Search card name">
+  <h1 class="text-center pt-4">Yu-Gi-Oh! Card Store</h1>
+  <input type="text" placeholder="Search card">
+  <div class="row align-items-center">
+    <div *ngFor="let item of this.cardData.data" class="col-sm pb-4 pt-4">
+      <div class="card bg-dark text-white" style="width: 18rem;">
+        <img id="cardImage" class="card-img-top" src="{{item.card_images[0].image_url}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title text-truncate">{{item.name}}</h5>
+          <p class="card-text truncate-t">{{item.desc}}</p>
+          <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button>
+        </div>
+      </div>
     </div>
+  </div>
+  <div>
+    <button (click)="prevPage()">Prev Page</button>
+    <button (click)="nextPage()">Next page</button>
   </div>
 </div>
