@@ -14,15 +14,40 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class YugiohService {
-
   constructor(private http:HttpClient) { }
-  public cardName:string = "";
-  url : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?staple=yes`;
+  urlStaple : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?staple=yes`;
+  urlAll : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?&num=32&offset=0&view=List&misc=yes`
 
-  getCard(){
-    return this.http.get(`${this.url}`, httpOptions);
+
+  getStaple(){
+    return this.http.get(`${this.urlStaple}`, httpOptions);
   }
+
+  getAllCards(){
+    return this.http.get(`${this.urlAll}`, httpOptions);
+  }
+
+  nextOffSet(nextPage : string){
+    this.urlAll = nextPage;
+    return this.http.get(`${this.urlAll}`, httpOptions);
+  }
+
+  prevOffSet(prevPage : string){
+    this.urlAll = prevPage;
+    return this.http.get(`${this.urlAll}`, httpOptions);
+  }
+
+  searchCard(cardSearch : string){
+    let cardName = cardSearch;
+    let urlSearch : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?&fname=${cardName}&desc=${cardName}&num=32&offset=0&view=List&misc=yes`
+    return this.http.get(`${urlSearch}`, httpOptions);
+  }
+
 }
+
+
+
+//https://db.ygoprodeck.com/api/v7/cardinfo.php?&fname=magician&desc=magician&num=32&offset=0&view=List&misc=yes
 
 //#region data i want
 /*"card_images": [

@@ -30,7 +30,11 @@ export class UserService {
   }
 
   GetUserById(id:any):Observable<IUser>{
-    return this.http.get<IUser>(`${this.url}GetUser/${id}`)
+    return this.http.get<IUser>(`${this.url}GetUser/${id}`, httpOptions)
+  }
+
+  edituser(editinfo:IUser,id:any):Observable<IUser>{
+    return this.http.post<IUser>((`${this.url}UpdateUser/${id}`),editinfo,httpOptions)
   }
 }
 //https://localhost:44349/api/UserModels/GetUser/8

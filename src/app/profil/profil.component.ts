@@ -2,7 +2,7 @@ import { visitAll } from '@angular/compiler';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { UserService,createPasswordStrengthValidator,checkPasswords} from '../Services/user.service';
+import { UserService, createPasswordStrengthValidator, checkPasswords } from '../Services/user.service';
 
 @Component({
   selector: 'app-profil',
@@ -11,7 +11,7 @@ import { UserService,createPasswordStrengthValidator,checkPasswords} from '../Se
 })
 export class ProfilComponent implements OnInit {
 
-  constructor(private api:UserService) { }
+  constructor(private api: UserService) { }
 
   //#region validation messages
   public validation_messages = {
@@ -67,15 +67,15 @@ export class ProfilComponent implements OnInit {
   //#endregion
 
   //#region edit form
- public EditAccountForm = new FormGroup({
-    userId: new FormControl(),
+  public EditAccountForm = new FormGroup({
+    userId: new FormControl(0),
     userName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     utlf: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{8}")]),
     roleId: new FormControl(1),
     role: new FormGroup({
       roleId: new FormControl(1),
-      role:new FormControl('')
+      role: new FormControl('')
     }),
     addressId: new FormControl(0),
     address: new FormGroup({
@@ -93,8 +93,8 @@ export class ProfilComponent implements OnInit {
   //#region confirm_passwordForm
   confirm_passwordForm = new FormGroup({
     uPassword: new FormControl('', [Validators.required, Validators.minLength(8), createPasswordStrengthValidator()]),
-    confirm_password:new FormControl('',[Validators.required])
-  },{ validators: checkPasswords()})
+    confirm_password: new FormControl('', [Validators.required])
+  }, { validators: checkPasswords() })
   //#endregion
   //#region Add Card Form
   AddCardForm = new FormGroup({
@@ -110,17 +110,22 @@ export class ProfilComponent implements OnInit {
   //#endregion
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('id')){
-    this.api.GetUserById(sessionStorage.getItem('id')).subscribe(data=>{
-      this.EditAccountForm.setValue(data)
-    })
+    if (sessionStorage.getItem('id')) {
+      this.api.GetUserById(sessionStorage.getItem('id')).subscribe(data => {
+        this.EditAccountForm.setValue(data)
+      })
     }
   }
 
   //#region method to upload the changes to the api
   Savechange() {
     //this.testForm.addControl('new', new FormControl('', Validators.required));
-    console.log(this.EditAccountForm.value);
+    sessionStorage.getItem('id')
+    this.EditAccountForm.addControl('uPassword',new FormControl())
+    this.EditAccountForm.get('uPassword')?.setValue(this.confirm_passwordForm.get('uPassword')?.value)
+    this.api.edituser(this.EditAccountForm.value, sessionStorage.getItem('id')).subscribe(data=>{
+      console.log(data);
+    })
   }
 
   AddCard() {

@@ -1,1 +1,27 @@
-<p>store works!</p>
+<div class="container">
+  <h1 class="text-center pt-4">Yu-Gi-Oh! Card Store</h1>
+  <div class="row text-center">
+    <div [formGroup]="Searchform">
+      <div class="ml-3 mr-3">
+        <label><b> Search </b></label>
+      </div>
+      <input formControlName="Search" class="ml-3 mr-3" type="text" placeholder="Search card">
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div *ngFor="let item of this.cardData.data" class="col-sm pb-4 pt-4">
+      <div class="card bg-dark text-white" style="width: 18rem;">
+        <img id="cardImage" class="card-img-top" src="{{item.card_images[0].image_url}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title text-truncate">{{item.name}}</h5>
+          <p class="card-text truncate-t">{{item.desc}}</p>
+          <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button (click)="prevPage()">Prev Page</button>
+    <button (click)="nextPage()">Next page</button>
+  </div>
+</div>
