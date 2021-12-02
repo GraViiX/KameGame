@@ -6,6 +6,7 @@ import { IPostcode } from '../Interface/ipostcode';
 import { PostcodeService } from '../Services/postcode.service';
 import { checkPasswords, createPasswordStrengthValidator, UserService } from '../Services/user.service';
 import * as $ from 'jquery';
+import { AuthService } from '../Services/auth.service';
 
 
 @Component({
@@ -15,7 +16,7 @@ import * as $ from 'jquery';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private _router: Router, public _profile: UserService, private api: UserService, private apiPostcode: PostcodeService) { }
+  constructor(private _router: Router, public _profile: UserService, private apiPostcode: PostcodeService , private _auth:AuthService) { }
 
   //#region validation messages
   public validation_messages = {
@@ -100,9 +101,10 @@ export class NavbarComponent implements OnInit {
 
   //#region login
   LoginClick() {
-    this.api.userLogin(this.loginForm.value).subscribe(data => { // call the api to see if the user exist in the database
-      sessionStorage.setItem('id', data.toString()) // add the user id to sessionStorage we need to do this to the token
-      this._profile.ProfileBehavior.next(true); // change the user icon to a dropdown menu where the user can logout or go til edit
+    this._auth.login(this.loginForm.value) // add the user id to sessionStorage we need to do this to the token
+
+    this._auth.OnLoginSuccessful.subscribe(next=>{
+      this._profile.ProfileBehavior.next(true);   // change the user icon to a dropdown menu where the user can logout or go til edit
     })
   }
 
@@ -152,8 +154,7 @@ export class NavbarComponent implements OnInit {
 
   //logout the user and set the loginform to "null" and change the user icon back to a button
   LogOut() {
-    this._profile.ProfileBehavior.next(false);
-    sessionStorage.removeItem('id')
+    this._auth.logout()
     this.loginForm.setValue({
       UserName:"",
       uPassword:""

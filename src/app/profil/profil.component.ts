@@ -3,6 +3,7 @@ import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../Services/auth.service';
 import { UserService, createPasswordStrengthValidator, checkPasswords } from '../Services/user.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { UserService, createPasswordStrengthValidator, checkPasswords } from '..
 })
 export class ProfilComponent implements OnInit {
 
-  constructor(private api: UserService, private _router: Router) { }
+  constructor(private api: UserService, private _router: Router, private _auth: AuthService) { }
 
   public errorMessages: string = "";
 
@@ -72,7 +73,7 @@ export class ProfilComponent implements OnInit {
   //#region edit form
   public EditAccountForm = new FormGroup({
     userId: new FormControl(0),
-    userName: new FormControl('', [Validators.required]),
+    userName: new FormControl(this._auth.userName, [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     utlf: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{8}")]),
     roleId: new FormControl(1),
@@ -116,11 +117,11 @@ export class ProfilComponent implements OnInit {
   //#endregion
 
   ngOnInit(): void {
-    if (!this.api.ProfileBehavior.value) {
+    if (!this._auth.authenticated) {
       this._router.navigate(['/home'])
     }
-    if (sessionStorage.getItem('id')) {
-      this.api.GetUserById(sessionStorage.getItem('id')).subscribe(data => {
+    if (sessionStorage.getItem('token')) {
+      this.api.GetUserById(this._auth.id).subscribe(data => {
         this.EditAccountForm.setValue(data)
       })
     }

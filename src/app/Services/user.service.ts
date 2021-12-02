@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { IToken } from '../Interface/itoken';
 import { IUser } from '../Interface/iuser';
 
 const httpOptions = {
@@ -21,8 +22,8 @@ export class UserService {
   constructor(private http:HttpClient) { }
 
   url : string = "https://localhost:44349/api/UserModels/";
-  userLogin(userToPost : IUser):Observable<IUser>{
-    return this.http.post<IUser>(`${this.url}Login`, userToPost,httpOptions);
+  userLogin(userToPost : IUser):Observable<IToken>{
+    return this.http.post<IToken>(`${this.url}Login`, userToPost,httpOptions);
   }
 
   UserCreate(UserToCreate:IUser):Observable<IUser>{
