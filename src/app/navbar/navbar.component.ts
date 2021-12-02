@@ -150,13 +150,10 @@ export class NavbarComponent implements OnInit {
     newModal?.click();
   }
 
-
-  GoToHome() {
-    this._router.navigate(['/home'])
-  }
   //logout the user and set the loginform to "null" and change the user icon back to a button
   LogOut() {
     this._profile.ProfileBehavior.next(false);
+    sessionStorage.removeItem('id')
     this.loginForm.setValue({
       UserName:"",
       uPassword:""

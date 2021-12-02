@@ -1,7 +1,7 @@
 <div class="container">
   <div class="d-flex flex-row bd-highlight mb-3">
     <div class="row">
-
+      <!--#region EditAccountForm-->
       <form [formGroup]="EditAccountForm" needs-validation>
         <h3>Edit Account</h3>
         <div class="col-8 mb-3">
@@ -16,7 +16,7 @@
         <div [formGroup]="confirm_passwordForm">
           <div class="col-8 mb-3">
             <label>Password</label>
-            <input type="text" formControlName="uPassword" required />
+            <input type="password" formControlName="uPassword" required />
             <div *ngFor="let validation of validation_messages.uPassword">
               <div class="error-message"
                 *ngIf="confirm_passwordForm.get('uPassword')?.hasError(validation.type) && (confirm_passwordForm.get('uPassword')?.dirty ||  confirm_passwordForm.get('uPassword')?.touched)">
@@ -25,7 +25,7 @@
           </div>
           <div class="col-8 mb-3">
             <label>confirm password</label>
-            <input type="text" formControlName="confirm_password" required />
+            <input type="password" formControlName="confirm_password" required />
             <div *ngFor="let validation of validation_messages.confirm_password">
               <div class="error-message"
                 *ngIf="confirm_passwordForm?.hasError(validation.type) && (confirm_passwordForm.get('confirm_password')?.dirty ||  confirm_passwordForm.get('confirm_password')?.touched)">
@@ -75,16 +75,28 @@
               </div>
             </div>
           </div>
+          <div class="col-8 mb-3">
+            <label>streetNames</label>
+            <input type="text" formControlName="streetNames" required>
+            <div *ngFor="let validation of validation_messages.StreetNames">
+              <div class="error-message"
+                *ngIf="EditAccountForm.get('address')?.get('streetNames')?.hasError(validation.type) && (EditAccountForm.get('address')?.get('streetNames')?.dirty ||  EditAccountForm.get('address')?.get('streetNames')?.touched)">
+                {{validation.message}}</div>
+            </div>
+          </div>
         </div>
         <button type="button" data-bs-toggle="modal" data-bs-target="#AddCard">
           Add credit card
         </button>
         <button type="button" (click)="Savechange()">Save change</button>
       </form>
+      <!--#endregion-->
     </div>
   </div>
 </div>
 
+
+<!--#region addcard modal-->
 <div class="modal fade" id="AddCard" tabindex="-1" aria-labelledby="AddCard" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -135,7 +147,8 @@
           <div class="row">
             <div class="form-group col-sm-4">
               <label for="ccmonth">Month</label>
-              <select class="form-control" id="ccmonth">
+              <select class="form-control" id="ccmonth" (change)="selectmonth($event)">
+                <option>00</option>
                 <option>01</option>
                 <option>02</option>
                 <option>03</option>
@@ -152,7 +165,8 @@
             </div>
             <div class="form-group col-sm-4">
               <label for="ccyear">Year</label>
-              <select class="form-control" id="ccyear">
+              <select class="form-control" id="ccyear" (change)="selectyear($event)">
+                <option>00</option>
                 <option>21</option>
                 <option>22</option>
                 <option>23</option>
@@ -167,10 +181,33 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="submit" class="btn btn-success" (click)="AddCard()">
+        <button type="submit" class="btn btn-success" (click)="AddCard()" data-bs-dismiss="modal">
           Save Account
         </button>
       </div>
     </div>
   </div>
 </div>
+<!--#endregion-->
+
+<!--#region error popup-->
+<button type="button" id="errorpopup" [hidden]="true" data-bs-toggle="modal" data-bs-target="#errormodal"></button>
+
+<div class="modal fade" id="errormodal" tabindex="-1" aria-labelledby="errormodal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white-50">
+        <h3>error</h3>
+      </div>
+      <div class="modal-body justify-content">
+        {{this.errorMessages}}
+      </div>
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--#endregion-->

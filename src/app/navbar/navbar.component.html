@@ -62,7 +62,7 @@
             </div>
             <div class="col">
               <label>Password</label>
-              <input type="text" formControlName="uPassword" required>
+              <input type="password" formControlName="uPassword" required>
               <div *ngFor="let validation of validation_messages.uPassword">
                 <div class="error-message"
                   *ngIf="loginForm.get('uPassword')?.hasError(validation.type) && (loginForm.get('uPassword')?.dirty || loginForm.get('uPassword')?.touched)">
@@ -79,7 +79,7 @@
         <button type="button" class="btn btn-secondary" (click)="openCreateModal()" data-bs-dismiss="modal">
           Create Account
         </button>
-        <button type="submit" class="btn btn-success" (click)="LoginClick()">
+        <button type="submit" class="btn btn-success" (click)="LoginClick()" data-bs-dismiss="modal">
           Login
         </button>
       </div>
@@ -114,7 +114,7 @@
             <div [formGroup]="confirm_passwordForm">
               <div class="col-sm-4 mb-3">
                 <label>Password</label>
-                <input type="text" formControlName="uPassword" required />
+                <input type="password" formControlName="uPassword" required />
                 <div *ngFor="let validation of validation_messages.uPassword">
                   <div class="error-message"
                     *ngIf="confirm_passwordForm.get('uPassword')?.hasError(validation.type) && (confirm_passwordForm.get('uPassword')?.dirty ||  confirm_passwordForm.get('uPassword')?.touched)">
@@ -123,7 +123,7 @@
               </div>
               <div class="col-8 mb-3">
                 <label>confirm password</label>
-                <input type="text" formControlName="confirm_password" required />
+                <input type="password" formControlName="confirm_password" required />
                 <div *ngFor="let validation of validation_messages.confirm_password">
                   <div class="error-message"
                     *ngIf="confirm_passwordForm?.hasError(validation.type) && (confirm_passwordForm.get('confirm_password')?.dirty ||  confirm_passwordForm.get('confirm_password')?.touched)">

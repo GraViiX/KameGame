@@ -2,6 +2,7 @@ import { visitAll } from '@angular/compiler';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService, createPasswordStrengthValidator, checkPasswords } from '../Services/user.service';
 
 @Component({
@@ -11,7 +12,9 @@ import { UserService, createPasswordStrengthValidator, checkPasswords } from '..
 })
 export class ProfilComponent implements OnInit {
 
-  constructor(private api: UserService) { }
+  constructor(private api: UserService, private _router: Router) { }
+
+  public errorMessages: string = "";
 
   //#region validation messages
   public validation_messages = {
@@ -83,7 +86,7 @@ export class ProfilComponent implements OnInit {
       postCodeId: new FormControl(0),
       postCode: new FormGroup({
         postcodeId: new FormControl(0),
-        postcode: new FormControl(null, [Validators.required]),
+        postcode: new FormControl(0, [Validators.required]),
         city: new FormControl('', Validators.required)
       }),
       streetNames: new FormControl('', Validators.required)
@@ -102,14 +105,20 @@ export class ProfilComponent implements OnInit {
     UserId: new FormControl(0), //skal være lig med id som vi får da bruger logger ind
     CardTypeId: new FormControl(0),
     CardNumber: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}")]),
-    CardDate: new FormControl('', Validators.required),
+    CardDate: new FormControl(''),
     SecurityNumber: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{3}")]),
     FirstName: new FormControl('', Validators.required),
     LastName: new FormControl('', Validators.required)
   })
+
+  month: any;
+  year: any;
   //#endregion
 
   ngOnInit(): void {
+    if (!this.api.ProfileBehavior.value) {
+      this._router.navigate(['/home'])
+    }
     if (sessionStorage.getItem('id')) {
       this.api.GetUserById(sessionStorage.getItem('id')).subscribe(data => {
         this.EditAccountForm.setValue(data)
@@ -117,21 +126,43 @@ export class ProfilComponent implements OnInit {
     }
   }
 
-  //#region method to upload the changes to the api
+  //#region method to upload the changes to the user
   Savechange() {
-    //this.testForm.addControl('new', new FormControl('', Validators.required));
-    sessionStorage.getItem('id')
-    this.EditAccountForm.addControl('uPassword',new FormControl())
-    this.EditAccountForm.get('uPassword')?.setValue(this.confirm_passwordForm.get('uPassword')?.value)
-    this.api.edituser(this.EditAccountForm.value, sessionStorage.getItem('id')).subscribe(data=>{
-      console.log(data);
-    })
-  }
-
-  AddCard() {
-    let firstChar = this.AddCardForm.value.CardNumber.charAt(0);
-    console.log(firstChar);
+    if (this.EditAccountForm.valid && this.confirm_passwordForm.valid) {
+      this.EditAccountForm.addControl('uPassword', new FormControl())
+      this.EditAccountForm.get('uPassword')?.setValue(this.confirm_passwordForm.get('uPassword')?.value)
+      this.api.edituser(this.EditAccountForm.value, sessionStorage.getItem('id')).subscribe(data => {
+        console.log(data);
+      })
+    }
+    else{
+      this.errorPopupMessages("you need fill the form")
+    }
   }
   //#endregion
+
+  //#region method to upload the changes to the card
+  selectmonth(month: any) {
+    this.month = month.target.value
+  }
+
+  selectyear(year: any) {
+    this.year = year.target.value
+  }
+  AddCard() {
+    if (this.year && this.month) {
+      this.AddCardForm.get('CardDate')?.setValue(this.month + '/' + this.year)
+    }
+    else {
+      this.errorPopupMessages("you need fill the date")
+    }
+    //let firstChar = this.AddCardForm.value.CardNumber.charAt(0);
+  }
+  //#endregion
+
+  errorPopupMessages(Messages: string) {
+    this.errorMessages = Messages
+    document.getElementById("errorpopup")?.click();
+  }
 }
 
