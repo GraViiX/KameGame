@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ICart } from '../Interface/icart';
+import { IPurchase } from '../Interface/ipurchase';
+import { CartService } from '../Services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -8,10 +10,18 @@ import { ICart } from '../Interface/icart';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  constructor() {}
+  constructor(private api: CartService) {}
 
   cart: any[] = [];
   holder: any;
+
+  purchase: IPurchase[] = [];
+  // purchaseForm = new FormGroup({
+  //   UserId: new FormControl(0),
+  //   ItemId: new FormControl(0),
+  //   Amount: new FormControl(0),
+  //   Bought: new FormControl(new Date(docDate))
+  // })
 
   ngOnInit(): void {
     this.holder = JSON.parse(sessionStorage['cart']);
@@ -23,47 +33,64 @@ export class CartComponent implements OnInit {
         id: Number(element.id),
         name: String(element.name),
         smallImg: String(element.smallImg),
-        amount: Number(element.amount)
+        amount: Number(element.amount),
       });
     }
     console.log(this.cart);
   }
 
-  RemoveAmount(item: any){
-    if(item.amount == 1){
-
-    }
-    else {
+  RemoveAmount(item: any) {
+    if (item.amount == 1) {
+    } else {
       this.cart[this.cart.indexOf(item)].amount -= 1;
       // let recurring = this.cart.find((data: any)  => data.id == item.id);
     }
     sessionStorage.setItem('cart', JSON.stringify(this.cart));
-    console.log(sessionStorage.getItem('cart'));
+    // console.log(sessionStorage.getItem('cart'));
   }
 
-  AddAmount(item: any){
+  AddAmount(item: any) {
     item.amount += 1;
+    sessionStorage.setItem('cart', JSON.stringify(this.cart));
   }
 
-  RemoveItem(item: any){
-
+  RemoveItem(item: any) {
+    this.cart.splice(this.cart.indexOf(item), 1);
+    sessionStorage.setItem('cart', JSON.stringify(this.cart));
   }
 
+  Purchase() {
+    var dateTime = new Date();
+    // YYYY-MM-DD HH:MM:SS
+    var date =
+      dateTime.getFullYear() +
+      "-" +
+      dateTime.getMonth() +
+      "-" +
+      dateTime.getDate() +
+      " " +
+      dateTime.getHours() +
+      ":" +
+      dateTime.getMinutes() +
+      ":" +
+      dateTime.getSeconds();
+    // console.log(date);
+    if (!sessionStorage.getItem('id')) {
+      console.log('ErrorFremvisning');
+    } else {
+      for (let index = 0; index < this.cart.length; index++) {
+        this.purchase.push({
+          UserId: Number(JSON.parse(sessionStorage['id'])),
+          ItemId: Number(this.cart[index].id),
+          Amount: Number(this.cart[index].amount),
+          Bought: String(date),
+        });
+      }
 
-    // this.cards.getCard().subscribe(res => {
-    //   this.cardData = res;
-    //   //console.log(this.cardData.data);
-    //   for (let index = 0; index < this.cardData.data.length; index++) {
-    //     const element = this.cardData.data[index];
-    //     this.cardList.push({
-    //     "id": element.id,
-    //     "name": element.name,
-    //     "imgUrl": element.card_images[0].image_url,
-    //     "imgUrlSmall": element.card_images[0].image_url_small,
-    //     "desc": element.desc
-    //     });
-    //   }
-    //   // console.log(this.cardList);
-    // });
-
+      this.api.PurchaseService(this.purchase).subscribe();
+      this.purchase = [];
+      this.cart = [];
+      sessionStorage.removeItem('cart');
+    }
+  }
 }
