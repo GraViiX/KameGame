@@ -132,7 +132,7 @@ export class ProfilComponent implements OnInit {
     if (this.EditAccountForm.valid && this.confirm_passwordForm.valid) {
       this.EditAccountForm.addControl('uPassword', new FormControl())
       this.EditAccountForm.get('uPassword')?.setValue(this.confirm_passwordForm.get('uPassword')?.value)
-      this.api.edituser(this.EditAccountForm.value, sessionStorage.getItem('id')).subscribe(data => {
+      this.api.edituser(this.EditAccountForm.value,this._auth.id).subscribe(data => {
         console.log(data);
       })
     }

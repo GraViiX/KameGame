@@ -101,7 +101,7 @@ export class NavbarComponent implements OnInit {
 
   //#region login
   LoginClick() {
-    this._auth.login(this.loginForm.value) // add the user id to sessionStorage we need to do this to the token
+    this._auth.login(this.loginForm.value)
 
     this._auth.OnLoginSuccessful.subscribe(next=>{
       this._profile.ProfileBehavior.next(true);   // change the user icon to a dropdown menu where the user can logout or go til edit
