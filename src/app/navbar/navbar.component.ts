@@ -102,7 +102,6 @@ export class NavbarComponent implements OnInit {
   //#region login
   LoginClick() {
     this._auth.login(this.loginForm.value)
-
     this._auth.OnLoginSuccessful.subscribe(next=>{
       this._profile.ProfileBehavior.next(true);   // change the user icon to a dropdown menu where the user can logout or go til edit
     })
@@ -136,13 +135,12 @@ export class NavbarComponent implements OnInit {
 
   //#region create
   CreateAccount() {
-    if (this.CreateAccountForm.value.PostCodeId == null) {
-      console.log("error: this.CreateAccountForm.value.PostCodeId er lig null!!!");
-    }
-    // this.api.UserCreate(this.CreateAccountForm.value).subscribe(data => {
-    //   console.log(data);
-    // })
+    this.CreateAccountForm.get('uPassword')?.setValue(this.confirm_passwordForm.get('uPassword')?.value)
     console.log(this.CreateAccountForm.value);
+    this._profile.UserCreate(this.CreateAccountForm.value).subscribe(data => {
+      console.log(data);
+    })
+
   }
   //#endregion
 

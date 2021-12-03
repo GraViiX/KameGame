@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ICart } from '../Interface/icart';
 import { IPurchase } from '../Interface/ipurchase';
 import { CartService } from '../Services/cart.service';
+import { AuthService } from '../Services/auth.service'
 
 @Component({
   selector: 'app-cart',
@@ -10,8 +11,8 @@ import { CartService } from '../Services/cart.service';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  constructor(private api: CartService) {}
-
+  constructor(private api: CartService, private _auth: AuthService) { }
+  errorMessages: string = "";
   cart: any[] = [];
   holder: any;
 
@@ -75,12 +76,12 @@ export class CartComponent implements OnInit {
       ":" +
       dateTime.getSeconds();
     // console.log(date);
-    if (!sessionStorage.getItem('id')) {
-      console.log('ErrorFremvisning');
+    if (!this._auth.id) {
+      this.errorPopupMessages("Du skal logge ind før du kan købe")
     } else {
       for (let index = 0; index < this.cart.length; index++) {
         this.purchase.push({
-          UserId: Number(JSON.parse(sessionStorage['id'])),
+          UserId: Number(this._auth.id),
           ItemId: Number(this.cart[index].id),
           Amount: Number(this.cart[index].amount),
           Bought: String(date),
@@ -92,5 +93,9 @@ export class CartComponent implements OnInit {
       this.cart = [];
       sessionStorage.removeItem('cart');
     }
+  }
+  errorPopupMessages(Messages: string) {
+    this.errorMessages = Messages
+    document.getElementById("errorpopup")?.click();
   }
 }

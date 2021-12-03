@@ -11,15 +11,16 @@
           <h4>Your cart is empty.</h4>
         </div>
       </div>
-      <div class="row border-top">
-        <div class="row align-items-left">
-          <div class="col-2"></div>
-        <div class="col-2">Item Name</div>
-        <div class="col-2">Item Amount</div>
-        <div class="col-2">Item price</div>
-        </div>
-      </div>
+
       <div *ngIf="cart.length != 0">
+        <div class="row border-top">
+          <div class="row align-items-left">
+            <div class="col-2"></div>
+          <div class="col-2">Item Name</div>
+          <div class="col-2">Item Amount</div>
+          <div class="col-2">Item price</div>
+          </div>
+        </div>
         <div *ngFor="let item of cart" class="row border-top border-bottom">
           <div class="row align-items-center">
             <div class="col-2">
@@ -52,3 +53,25 @@
     </div>
   </div>
 </div>
+
+<!--#region error popup-->
+<button type="button" id="errorpopup" [hidden]="true" data-bs-toggle="modal" data-bs-target="#errormodal"></button>
+
+<div class="modal fade" id="errormodal" tabindex="-1" aria-labelledby="errormodal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white-50">
+        <h3>error</h3>
+      </div>
+      <div class="modal-body justify-content">
+        {{this.errorMessages}}
+      </div>
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--#endregion-->
