@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <div class="col-8 mb-3">
+        <div class="col-sm-4 mb-3">
           <label>Email</label>
           <input type="text" formControlName="email" required />
           <div *ngFor="let validation of validation_messages.Email">
@@ -65,7 +65,7 @@
                   {{validation.message}}</div>
               </div>
             </div>
-            <div class="col-8 mb-3">
+            <div class="col-sm-4 mb-3">
               <label>City</label>
               <input type="text" formControlName="city" required>
               <div *ngFor="let validation of validation_messages.City">
@@ -85,6 +85,9 @@
             </div>
           </div>
         </div>
+        <button class=" btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteAccountmodel">
+          deleteAccount
+        </button>
         <button type="button" data-bs-toggle="modal" data-bs-target="#AddCard">
           Add credit card
         </button>
@@ -183,6 +186,29 @@
         </button>
         <button type="submit" class="btn btn-success" (click)="AddCard()" data-bs-dismiss="modal">
           Save Account
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--#endregion-->
+
+<!--#region deleteAccountmodel-->
+<div class="modal fade" id="deleteAccountmodel" tabindex="-1" aria-labelledby="deleteAccountmodel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white-50">
+        <h3>delete this Account</h3>
+      </div>
+      <div class="modal-body justify-content">
+        Aew you sure you wanna delete this Account?
+      </div>
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          no
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="deleteAccount()">
+          yes
         </button>
       </div>
     </div>

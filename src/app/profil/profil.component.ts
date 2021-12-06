@@ -161,6 +161,19 @@ export class ProfilComponent implements OnInit {
   }
   //#endregion
 
+  deleteAccount(){
+    console.log(this._auth.id);
+
+    this.api.deleteuser(this._auth.id).subscribe(data => {
+      if(data){
+        this._auth.logout();
+      }
+    })
+
+    console.log("all done");
+
+  }
+
   errorPopupMessages(Messages: string) {
     this.errorMessages = Messages
     document.getElementById("errorpopup")?.click();
