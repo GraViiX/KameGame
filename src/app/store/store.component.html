@@ -1,13 +1,11 @@
 <div class="container">
   <h1 class="text-center pt-4">Yu-Gi-Oh! Card Store</h1>
-  <div class="row text-center">
-    <div [formGroup]="Searchform">
-      <div class="ml-3 mr-3">
-        <label><b> Search </b></label>
+  <form class="form-inline" [formGroup]="Searchform">
+      <div class="input-group">
+        <input formControlName="Search" class="form-control" placeholder="Search" aria-label="Search" type="search">
+        <button type="button" class="btn btn-dark btn">Search Filter</button>
       </div>
-      <input formControlName="Search" class="ml-3 mr-3" type="text" placeholder="Search card">
-    </div>
-  </div>
+  </form>
   <div class="row align-items-center">
     <div *ngFor="let item of this.cardData.data" class="col-sm pb-4 pt-4">
       <div class="card bg-dark text-white" style="width: 18rem;">
@@ -20,8 +18,8 @@
       </div>
     </div>
   </div>
-  <div>
-    <button (click)="prevPage()">Prev Page</button>
-    <button (click)="nextPage()">Next page</button>
+  <div class="col mb-3">
+    <button type="button" class="btn btn-dark btn-sm" (click)="prevPage()">Prev Page</button>
+    <button type="button" class="btn btn-dark btn-sm" (click)="nextPage()">Next page</button>
   </div>
 </div>
