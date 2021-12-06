@@ -7,7 +7,7 @@
       </div>
   </form>
   <div class="row align-items-center">
-    <div *ngFor="let item of this.cardData.data" class="col-sm pb-4 pt-4">
+    <div *ngFor="let item of this.cardData?.data" class="col-sm pb-4 pt-4">
       <div class="card bg-dark text-white" style="width: 18rem;">
         <img id="cardImage" class="card-img-top" src="{{item.card_images[0].image_url}}" alt="Card image cap">
         <div class="card-body">

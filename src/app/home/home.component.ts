@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
         id: item.id,
         name: item.name,
         smallImg: item.imgUrlSmall,
-        cardPrice: item.card_prices[0].tcgplayer_price,
+        cardPrice: item.cardPrice,
         amount: 1
       });
     }

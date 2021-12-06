@@ -34,7 +34,7 @@ export class CartComponent implements OnInit {
         id: Number(element.id),
         name: String(element.name),
         smallImg: String(element.smallImg),
-        cardPrice: String(element.card_prices[0].tcgplayer_price),
+        cardPrice: String(element.cardPrice),
         amount: Number(element.amount),
       });
     }

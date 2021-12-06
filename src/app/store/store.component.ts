@@ -13,12 +13,28 @@ export class StoreComponent implements OnInit {
   constructor(private cards: YugiohService) { }
   public cardData: any;
   public cart: any = [];
+  holder: any;
   public Searchform = new FormGroup({
     Search: new FormControl('')
   })
   ngOnInit(): void {
     this.products();
     this.Searchbar();
+    this.holder = JSON.parse(sessionStorage['cart']);
+    console.log(this.holder[0]);
+
+    for (let index = 0; index < this.holder.length; index++) {
+      const element = this.holder[index];
+      this.cart.push({
+        id: Number(element.id),
+        name: String(element.name),
+        smallImg: String(element.smallImg),
+        cardPrice: String(element.cardPrice),
+        amount: Number(element.amount)
+      });
+    }
+    console.log(this.cart);
+
   }
 
   AddToCart(item: any) {
@@ -31,8 +47,8 @@ export class StoreComponent implements OnInit {
       this.cart.push({
         id: item.id,
         name: item.name,
-        smallImg: item.imgUrlSmall,
-        cardPrice: item.card_prices[0].tcgplayer_price,
+        smallImg: item.card_images[0].image_url_small,
+        cardPrice: item.cardPrice,
         amount: 1
       });
     }
@@ -56,7 +72,7 @@ export class StoreComponent implements OnInit {
 
   Searchbar() {
     this.Searchform.get('Search')?.valueChanges.subscribe((input) => {
-      this.cards.searchCard(input).subscribe((res)=>{
+      this.cards.searchCard(input).subscribe((res) => {
         this.cardData = res;
         console.log(this.cardData);
       })
