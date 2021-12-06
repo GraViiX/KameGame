@@ -14,6 +14,8 @@ import { ProfilComponent } from './profil/profil.component';
 import { CartComponent } from './cart/cart.component';
 import { StoreComponent } from './store/store.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { JwtModule } from '@auth0/angular-jwt';
       },
     }),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]
