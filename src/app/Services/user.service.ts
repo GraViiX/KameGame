@@ -37,6 +37,9 @@ export class UserService {
   edituser(editinfo:IUser,id:any):Observable<IUser>{
     return this.http.post<IUser>((`${this.url}UpdateUser/${id}`),editinfo,httpOptions)
   }
+  deleteuser(id:any){
+    return this.http.delete(`${this.url}${id}`,httpOptions)
+  }
 }
 //https://localhost:44349/api/UserModels/GetUser/8
 
