@@ -60,6 +60,8 @@
                   {{validation.message}}</div>
               </div>
             </div>
+            <div class="wd-100">
+            </div>
             <div class="col">
               <label>Password</label>
               <input type="password" formControlName="uPassword" required>
@@ -181,7 +183,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="submit" class="btn btn-success" (click)="CreateAccount()">
+        <button type="submit" class="btn btn-success" (click)="CreateAccount()" data-bs-dismiss="modal">
           Save Account
         </button>
       </div>

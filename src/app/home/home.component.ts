@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
         id: Number(element.id),
         name: String(element.name),
         smallImg: String(element.smallImg),
+        cardPrice: String(element.card_prices[0].tcgplayer_price),
         amount: Number(element.amount)
       });
     }
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit {
         id: item.id,
         name: item.name,
         smallImg: item.imgUrlSmall,
+        cardPrice: item.card_prices[0].tcgplayer_price,
         amount: 1
       });
     }
@@ -63,6 +65,7 @@ export class HomeComponent implements OnInit {
           name: element.name,
           imgUrl: element.card_images[0].image_url,
           imgUrlSmall: element.card_images[0].image_url_small,
+          cardPrice: element.card_prices[0].tcgplayer_price,
           desc: element.desc,
         });
       }

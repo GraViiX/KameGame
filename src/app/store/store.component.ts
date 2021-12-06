@@ -32,6 +32,7 @@ export class StoreComponent implements OnInit {
         id: item.id,
         name: item.name,
         smallImg: item.imgUrlSmall,
+        cardPrice: item.card_prices[0].tcgplayer_price,
         amount: 1
       });
     }
@@ -58,7 +59,6 @@ export class StoreComponent implements OnInit {
       this.cards.searchCard(input).subscribe((res)=>{
         this.cardData = res;
         console.log(this.cardData);
-
       })
     })
   }
