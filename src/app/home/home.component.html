@@ -7,7 +7,9 @@
         <div class="card-body">
           <h5 class="card-title text-truncate">{{item.name}}</h5>
           <p class="card-text truncate-t">{{item.desc}}</p>
-          <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button>
+        </div>
+        <div class="card-body">
+          <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button> Price: <b>{{item.cardPrice}} $</b>
         </div>
       </div>
     </div>

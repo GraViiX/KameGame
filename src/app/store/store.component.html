@@ -13,7 +13,7 @@
         <div class="card-body">
           <h5 class="card-title text-truncate">{{item.name}}</h5>
           <p class="card-text truncate-t">{{item.desc}}</p>
-          <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button>
+          <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button> Price: <b>{{item.card_prices[0].tcgplayer_price}} $</b>
         </div>
       </div>
     </div>
