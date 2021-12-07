@@ -37,15 +37,38 @@ export class YugiohService {
     return this.http.get(`${this.urlAll}`, httpOptions);
   }
 
-  searchCard(cardSearch : string){
+  searchCard(cardSearch : string, type: any, Attribute: any, Race: any, Effect:any){
     let cardName = cardSearch;
-    let urlSearch : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?&fname=${cardName}&desc=${cardName}&num=32&offset=0&view=List&misc=yes`
-    return this.http.get(`${urlSearch}`, httpOptions);
+    let emptyType : string = "";
+    let emptyAttribute : string = "";
+    let emptyRace : string = "";
+    let emptyEffect : string = "";
+    if(type != ""){
+      emptyType = `&type=${type}`;
+    }
+    if(Attribute != ""){
+      emptyAttribute = `&attribute=${Attribute}`;
+    }
+    if(Race != ""){
+      emptyRace = `&race=${Race}`;
+    }
+    if(Effect != ""){
+      emptyEffect = `&effect=${Effect}`;
+    }
+    let filterUrl : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?&fname=${cardName}&desc=${cardName}${emptyType}${emptyAttribute}${emptyRace}${emptyEffect}&num=32&offset=0&view=List&misc=yes`
+    return this.http.get(`${filterUrl}`, httpOptions);
+  }
+
+  filteredCards(){
+
   }
 
 }
 
-
+//https://db.ygoprodeck.com/api/v7/cardinfo.php?&fname=${cardName}&desc=${cardName}&type=${}&race=${}&num=32&offset=0&view=List&misc=yes
+//?&type=${}&race=${}&effect=${}
+//https://db.ygoprodeck.com/api/v7/cardinfo.php?&fname=fiend&desc=fiend&type=Effect%20Monster&race=Fiend&attribute=DARK&effect=Banish&num=30&offset=0&view=List&misc=yes
+//&fname=fiend&desc=fiend&type=Effect%20Monster&race=Fiend&attribute=DARK&effect=Banish&num=30&offset=0&view=List
 
 //https://db.ygoprodeck.com/api/v7/cardinfo.php?&fname=magician&desc=magician&num=32&offset=0&view=List&misc=yes
 
