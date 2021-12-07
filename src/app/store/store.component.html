@@ -1,10 +1,11 @@
 <div class="container">
   <h1 class="text-center pt-4">Yu-Gi-Oh! Card Store</h1>
   <form class="form-inline" [formGroup]="Searchform">
-      <div class="input-group">
-        <input formControlName="Search" class="form-control" placeholder="Search" aria-label="Search" type="search">
-        <button type="button" class="btn btn-dark btn">Search Filter</button>
-      </div>
+    <div class="input-group">
+      <input formControlName="Search" class="form-control" placeholder="Search" aria-label="Search" type="search">
+      <button type="button" class="btn btn-dark btn" data-bs-toggle="modal" data-bs-target="#filtermodal">Search
+        Filter</button>
+    </div>
   </form>
   <div class="row align-items-center">
     <div *ngFor="let item of this.cardData?.data" class="col-sm pb-4 pt-4">
@@ -13,7 +14,8 @@
         <div class="card-body">
           <h5 class="card-title text-truncate">{{item.name}}</h5>
           <p class="card-text truncate-t">{{item.desc}}</p>
-          <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button> Price: <b>{{item.card_prices[0].tcgplayer_price}} $</b>
+          <button (click)="AddToCart(item)" class="btn btn-light text-dark">Add to cart</button> Price:
+          <b>{{item.card_prices[0].tcgplayer_price}} $</b>
         </div>
       </div>
     </div>
@@ -23,3 +25,143 @@
     <button type="button" class="btn btn-dark btn-sm" (click)="nextPage()">Next page</button>
   </div>
 </div>
+
+<!--#region filter popup-->
+
+<div class="modal fade" id="filtermodal" tabindex="-1" aria-labelledby="errormodal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white-50">
+        <h3>Filter cards</h3>
+      </div>
+      <div class="modal-body">
+        <div class="row d-flex flex-column">
+          <div class="col-sm-4 mb-3 flex-fill">
+            <label>Select Card Type</label>
+            <select id="filter-type" (change)="onChangetype($event)" tabindex="-1" aria-hidden="true">
+              <option>Select Card Type</option>
+              <option>Effect Monster</option>
+              <option>Flip Effect Monster</option>
+              <option>Fusion Monster</option>
+              <option>Gemini Monster</option>
+              <option>Link Monster</option>
+              <option>Normal Monster</option>
+              <option>Normal Tuner Monster</option>
+              <option>Pendulum Effect Fusion Monster</option>
+              <option>Pendulum Effect Monster</option>
+              <option>Pendulum Flip Effect Monster</option>
+              <option>Pendulum Normal Monster</option>
+              <option>Pendulum Effect Ritual Monster</option>
+              <option>Pendulum Tuner Effect Monster</option>
+              <option>Ritual Effect Monster</option>
+              <option>Ritual Monster</option>
+              <option>Skill Card</option>
+              <option>Spell Card</option>
+              <option>Spirit Monster</option>
+              <option>Staple</option>
+              <option>Synchro Monster</option>
+              <option>Synchro Pendulum Effect Monster</option>
+              <option>Synchro Tuner Monster</option>
+              <option>Token</option>
+              <option>Toon Monster</option>
+              <option>Trap Card</option>
+              <option>Tuner Monster</option>
+              <option>Union Effect Monster</option>
+              <option>XYZ Monster</option>
+              <option>XYZ Pendulum Effect Monster</option>
+            </select>
+          </div>
+          <div class="col-sm-4 mb-3 flex-fill">
+            <label>Select Attribute</label>
+            <select id="filter-attribute" tabindex="-1" (change)="onChangeAttribute($event)" aria-hidden="true">
+              <option>Select Attributee</option>
+              <option>DARK</option>
+              <option>EARTH</option>
+              <option>FIRE</option>
+              <option>LIGHT</option>
+              <option>WATER</option>
+              <option>WIND</option>
+              <option>DIVINE</option>
+            </select>
+          </div>
+          <div class="col-sm-4 mb-3 flex-fill">
+            <label>Select Race</label>
+            <select id="filter-race" (change)="onChangeRace($event)" tabindex="-1" aria-hidden="true">
+              <option>Select Race</option>
+              <option>Aqua</option>
+              <option>Beast</option>
+              <option>Beast-Warrior</option>
+              <option>Creator-God</option>
+              <option>Cyberse</option>
+              <option>Dinosaur</option>
+              <option>Divine-Beast</option>
+              <option>Dragon</option>
+              <option>Fairy</option>
+              <option>Fiend</option>
+              <option>Fish</option>
+              <option>Insect</option>
+              <option>Machine</option>
+              <option>Plant</option>
+              <option>Psychic</option>
+              <option>Pyro</option>
+              <option>Reptile</option>
+              <option>Rock</option>
+              <option>Sea Serpent</option>
+              <option>Spellcaster</option>
+              <option>Thunder</option>
+              <option>Warrior</option>
+              <option>Winged Beast</option>
+              <option>Wyrm</option>
+              <option>Zombie</option>
+            </select>
+          </div>
+          <div class="col-sm-4 mb-3">
+            <label> Select Card Effect</label>
+            <select id="filter-effect" (change)="onChangeEffect($event)" tabindex="-1" aria-hidden="true">
+              <option>Select Card Effect</option>
+              <option>back to Deck</option>
+              <option>back to Hand</option>
+              <option>banish</option>
+              <option>change ATK or DEF</option>
+              <option>ontrol</option>
+              <option>Counter</option>
+              <option>Damage LP</option>
+              <option>Destroy Monster</option>
+              <option>Direct Attack</option>
+              <option>Draw</option>
+              <option>Effect Damage</option>
+              <option>Fusion-Related</option>
+              <option>Gamble</option>
+              <option>Graveyard</option>
+              <option>Increase Level</option>
+              <option>LINK-Related</option>
+              <option>Negate</option>
+              <option>Pendulum-Related</option>
+              <option>Piercing</option>
+              <option>Recover LP</option>
+              <option>Repeat Attack</option>
+              <option>Ritual-Related</option>
+              <option>Search</option>
+              <option>Select</option>
+              <option>Special Summon</option>
+              <option>Synchro-Related</option>
+              <option>Token</option>
+              <option>Tuner-Related</option>
+              <option>Win the Duel</option>
+              <option>XYZ-Related</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer bg-dark">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="filtercards()">
+          filter cards
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--#endregion-->

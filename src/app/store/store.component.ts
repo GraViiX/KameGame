@@ -84,4 +84,25 @@ export class StoreComponent implements OnInit {
       this.cardData = res;
     });
   }
+
+  onChangetype(type: any) {
+    console.log(type.target.value);
+  }
+
+  onChangeAttribute(Attribute: any) {
+    console.log(Attribute.target.value);
+  }
+
+  onChangeRace(Race: any) {
+    console.log(Race.target.value);
+  }
+
+  onChangeEffect(Effect:any){
+    console.log(Effect.target.value);
+
+  }
+
+  filtercards(){
+
+  }
 }
