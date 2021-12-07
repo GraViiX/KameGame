@@ -34,7 +34,7 @@
               <a class="border bg-light text-dark" style="text-decoration: none; padding: .5rem;">{{item.amount}}</a>
               <button class="btn" (click)="AddAmount(item)">+</button>
             </div>
-            <div class="col-2">Evt. pris</div>
+            <div class="col-2">{{(item.cardPrice * item.amount).toFixed(2)}} $</div>
             <div class="col-2 align-items-right">
               <button class="btn" (click)="RemoveItem(item)">Remove &#10005;</button>
             </div>
@@ -45,8 +45,8 @@
 
     <div class="col bg-light text-dark justify-content-md-center">
       <h5>Checkout</h5>
-      <p class="row border-top">Evt. samlet mængde af items</p>
-      <p class="row border-top">Evt. samlet pris</p>
+      <p class="row border-top">Amount of items: {{TotalAmount()}}</p>
+      <p class="row border-top">Total price: {{TotalPrice()}}</p>
       <button class="btn btn-dark text-white" (click)="Purchase()">
         Purchase
       </button>

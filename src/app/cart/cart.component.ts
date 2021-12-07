@@ -95,6 +95,24 @@ export class CartComponent implements OnInit {
       sessionStorage.removeItem('cart');
     }
   }
+
+  TotalPrice(){
+    let price: number = 0;
+    this.cart.forEach(element => {
+      price += element.cardPrice/1 * element.amount;
+    });
+
+    return (price).toFixed(2);
+  }
+
+  TotalAmount(){
+    let amount: number = 0;
+    this.cart.forEach(element => {
+      amount += element.amount;
+    });
+    return amount;
+  }
+
   errorPopupMessages(Messages: string) {
     this.errorMessages = Messages
     document.getElementById("errorpopup")?.click();
