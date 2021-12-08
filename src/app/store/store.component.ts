@@ -14,10 +14,10 @@ export class StoreComponent implements OnInit {
   public cardData: any;
   public cart: any = [];
   holder: any;
-  type: string = "";
-  Attribute: string = "";
-  Race: string = "";
-  Effect: string = "";
+  type: string="";
+  Attribute: string="";
+  Race: string="";
+  Effect: string="";
 
   public Searchform = new FormGroup({
     Search: new FormControl('')
@@ -25,6 +25,10 @@ export class StoreComponent implements OnInit {
   ngOnInit(): void {
     this.products();
     this.Searchbar();
+    this.type = "";
+    this.Attribute = "";
+    this.Race = "";
+    this.Effect = "";
     this.holder = JSON.parse(sessionStorage['cart']);
     console.log(this.holder[0]);
 
@@ -53,7 +57,7 @@ export class StoreComponent implements OnInit {
         id: item.id,
         name: item.name,
         smallImg: item.card_images[0].image_url_small,
-        cardPrice: item.cardPrice,
+        cardPrice: item.card_prices[0].tcgplayer_price,
         amount: 1
       });
     }
