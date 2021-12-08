@@ -59,8 +59,25 @@ export class YugiohService {
     return this.http.get(`${filterUrl}`, httpOptions);
   }
 
-  filteredCards(){
-
+  filteredCards(type: any, Attribute: any, Race: any, Effect:any){
+    let emptyType : string = "";
+    let emptyAttribute : string = "";
+    let emptyRace : string = "";
+    let emptyEffect : string = "";
+    if(type != ""){
+      emptyType = `&type=${type}`;
+    }
+    if(Attribute != ""){
+      emptyAttribute = `&attribute=${Attribute}`;
+    }
+    if(Race != ""){
+      emptyRace = `&race=${Race}`;
+    }
+    if(Effect != ""){
+      emptyEffect = `&effect=${Effect}`;
+    }
+    let filterUrl : string = `https://db.ygoprodeck.com/api/v7/cardinfo.php?${emptyType}${emptyAttribute}${emptyRace}${emptyEffect}&num=32&offset=0&view=List&misc=yes`
+    return this.http.get(`${filterUrl}`, httpOptions);
   }
 
 }

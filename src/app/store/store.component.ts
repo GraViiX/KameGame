@@ -127,6 +127,8 @@ export class StoreComponent implements OnInit {
   }
 
   filtercards(){
-
+    this.cards.filteredCards(this.type, this.Attribute, this.Race, this.Effect).subscribe(res =>{
+      this.cardData = res;
+    });
   }
 }
