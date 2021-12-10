@@ -25,7 +25,7 @@ export class StoreComponent implements OnInit {
   ngOnInit(): void {
     this.products();
     this.Searchbar();
-    this.type = "";
+    this.type = '';
     this.Attribute = "";
     this.Race = "";
     this.Effect = "";
