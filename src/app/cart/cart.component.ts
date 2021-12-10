@@ -13,7 +13,7 @@ import { AuthService } from '../Services/auth.service'
 export class CartComponent implements OnInit {
   constructor(private api: CartService, private _auth: AuthService) { }
   errorMessages: string = "";
-  cart: any[] = [];
+  public cart: any[] = [];
   holder: any;
 
   purchase: IPurchase[] = [];
@@ -25,6 +25,9 @@ export class CartComponent implements OnInit {
   // })
 
   ngOnInit(): void {
+    if(sessionStorage['cart'] == null){
+      sessionStorage.setItem('cart', JSON.stringify(this.cart));
+    }
     this.holder = JSON.parse(sessionStorage['cart']);
     console.log(this.holder[0]);
 

@@ -6,22 +6,22 @@
           <h2>Your Cart</h2>
         </div>
       </div>
-      <div *ngIf="cart.length == 0">
+      <div *ngIf="this.cart.length === 0">
         <div class="row border-top">
           <h4>Your cart is empty.</h4>
         </div>
       </div>
 
-      <div *ngIf="cart.length != 0">
+      <div *ngIf="this.cart.length != 0">
         <div class="row border-top">
           <div class="row align-items-left">
             <div class="col-2"></div>
-          <div class="col-2">Item Name</div>
-          <div class="col-2">Item Amount</div>
-          <div class="col-2">Item price</div>
+            <div class="col-2">Item Name</div>
+            <div class="col-2">Item Amount</div>
+            <div class="col-2">Item price</div>
           </div>
         </div>
-        <div *ngFor="let item of cart" class="row border-top border-bottom">
+        <div *ngFor="let item of this.cart" class="row border-top border-bottom">
           <div class="row align-items-center">
             <div class="col-2">
               <img class="img-fluid" src="{{item.smallImg}}" />
@@ -42,7 +42,6 @@
         </div>
       </div>
     </div>
-
     <div class="col bg-light text-dark justify-content-md-center">
       <h5>Checkout</h5>
       <p class="row border-top">Amount of items: {{TotalAmount()}}</p>
@@ -52,11 +51,9 @@
       </button>
     </div>
   </div>
+  <button type="button" id="errorpopup" [hidden]="true" data-bs-toggle="modal" data-bs-target="#errormodal"></button>
 </div>
-
 <!--#region error popup-->
-<button type="button" id="errorpopup" [hidden]="true" data-bs-toggle="modal" data-bs-target="#errormodal"></button>
-
 <div class="modal fade" id="errormodal" tabindex="-1" aria-labelledby="errormodal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
